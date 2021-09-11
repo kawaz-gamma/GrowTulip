@@ -14,6 +14,12 @@ public class GameManager : MonoBehaviour
     private float saveIntervalSec = 10.0f;
     private TadaLib.Timer saveTimer;
 
+    // 音
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip getSe;
+    [SerializeField]
+    AudioClip buySe;
     public static GameManager instance;
     public static float landBaseWidth = 1.25f;
     public static float landBaseHeight = 1f;
@@ -95,6 +101,7 @@ public class GameManager : MonoBehaviour
         // はじめに何個か持っている
         //kyuukonCount = 1;
         //totalKyuukonCount = kyuukonCount;
+        TryGetComponent(out audioSource);
     }
 
     private void Start()
@@ -196,7 +203,7 @@ public class GameManager : MonoBehaviour
             tSpeedButton.gameObject.SetActive(true);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
         }
-        kPerButton.interactable = kyuukonCount > kPerPrice;
+        tSpeedButton.interactable = kyuukonCount > tSpeedPrice;
         if (!kPerButton.gameObject.activeSelf && kyuukonCount > kPerPrice)
         {
             kPerButton.gameObject.SetActive(true);
@@ -208,7 +215,7 @@ public class GameManager : MonoBehaviour
 
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
         KoitanDebug.Display($"球根総獲得数 = {totalKyuukonCount}\n");
-        KoitanDebug.Display($"時間あたり球根獲得数 = {counterPerTime.GetCount(totalKyuukonCount):F2}\n");
+        KoitanDebug.Display($"時間あたり球根獲得数 = {counterPerTime.GetCount(totalKyuukonCount):F1}\n");
         //KoitanDebug.Display($"植えたチューリップの本数 = {plantTulipCount}\n");
         //KoitanDebug.Display($"収穫したチューリップの本数 = {getTulipCount}\n");
         KoitanDebug.Display($"タイム : {(int)Time.time}s\n");
@@ -221,6 +228,8 @@ public class GameManager : MonoBehaviour
             tulipList.Remove(tulip);
             Destroy(tulip.gameObject);
             getTulipCount++;
+            // 音
+            audioSource.PlayOneShot(getSe);
             // 取得した球根の表示
             Vector3 targetPos = kyuukonImage.position;
             // ランダムな方向
@@ -258,6 +267,7 @@ public class GameManager : MonoBehaviour
             landText.text = $"土地({landPrice}T)";
             landWidth = landBaseWidth * Camera.main.orthographicSize;
             landHeight = landBaseHeight * Camera.main.orthographicSize;
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -273,6 +283,7 @@ public class GameManager : MonoBehaviour
             soujikiText.text = $"自動収穫機({soujikiPrice}T)";
             var soujiki = Instantiate(soujikiPrefab);
             soujikiList.Add(soujiki);
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -285,6 +296,7 @@ public class GameManager : MonoBehaviour
             droneText.text = $"自動種まき機({dronePrice}T)";
             var drone = Instantiate(dronePrefab);
             droneList.Add(drone);
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -302,6 +314,7 @@ public class GameManager : MonoBehaviour
             sSpeedPrice = Mathf.FloorToInt(sSpeedPrice * sSpeedMag);
             sSpeedText.text = $"収穫機スピードアップ({sSpeedPrice}T)";
             Soujiki.speed *= Soujiki.speedMag;
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -314,6 +327,7 @@ public class GameManager : MonoBehaviour
             dSpeedText.text = $"種まき機スピードアップ({dSpeedPrice}T)";
             Drone.speed *= Drone.speedMag;
             Drone.interval /= Drone.speedMag;
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -325,6 +339,7 @@ public class GameManager : MonoBehaviour
             tSpeedPrice = Mathf.FloorToInt(tSpeedPrice * tSpeedMag);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
             Tulip.tulipTime /= Tulip.tulipTimeMag;
+            audioSource.PlayOneShot(buySe);
         }
     }
 
@@ -336,6 +351,7 @@ public class GameManager : MonoBehaviour
             kPerPrice = Mathf.FloorToInt(kPerPrice * kPerMag);
             kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
             kyuukonPerTulip += 1;
+            audioSource.PlayOneShot(buySe);
         }
     }
 
