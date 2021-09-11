@@ -8,7 +8,9 @@ public class Tulip : MonoBehaviour
     [SerializeField]
     GameObject kyuukonSprite;
     [SerializeField]
-    GameObject tulipSprite;
+    GameObject tulipFlowerObject;
+    [SerializeField]
+    GameObject tulipFlowerSprite;
     [SerializeField]
     Collider2D collider;
     float lifeTime = 0;
@@ -20,7 +22,10 @@ public class Tulip : MonoBehaviour
         state = TulipState.Kyuukon;
         //collider.enabled = false;
         kyuukonSprite.SetActive(true);
-        tulipSprite.SetActive(false);
+        tulipFlowerObject.SetActive(false);
+
+        // 花の色を変更
+        tulipFlowerSprite.GetComponent<SpriteRenderer>().material.SetFloat("_Hue", Random.Range(0, 360));
     }
 
     // Update is called once per frame
@@ -35,7 +40,7 @@ public class Tulip : MonoBehaviour
                     state = TulipState.Tulip;
                     collider.enabled = true;
                     kyuukonSprite.SetActive(false);
-                    tulipSprite.SetActive(true);
+                    tulipFlowerObject.SetActive(true);
                     // チューリップリストに追加
                     GameManager.instance.tulipList.Add(this);
                 }
