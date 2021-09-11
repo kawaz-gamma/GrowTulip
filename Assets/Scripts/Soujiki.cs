@@ -27,8 +27,9 @@ public class Soujiki : MonoBehaviour
                     //target = GameManager.instance.tulipList[Random.Range(0, GameManager.instance.tulipList.Count)];
                     // 一番近いチューリップを探す
                     float distance = float.MaxValue;
-                    foreach (Tulip tulip in GameManager.instance.tulipList)
+                    for (int i = 0; i < GameManager.instance.tulipList.Count; i++)
                     {
+                        Tulip tulip = GameManager.instance.tulipList[i];
                         // 乱数で抜ける
                         //if (Random.Range(0, 2) == 0) continue;
                         float tmp = Vector3.SqrMagnitude(tulip.transform.position - transform.position);
