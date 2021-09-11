@@ -4,6 +4,7 @@ using UnityEngine;
 using KoitanLib;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,16 +15,25 @@ public class GameManager : MonoBehaviour
     private TadaLib.Timer saveTimer;
 
     public static GameManager instance;
+    public static float landBaseWidth = 1.25f;
+    public static float landBaseHeight = 1f;
+    public static float landWidth = 2.5f;
+    public static float landHeight = 2f;
     [SerializeField]
     Tulip tulipPrefab;
     [SerializeField]
     Soujiki soujikiPrefab;
     [SerializeField]
     Drone dronePrefab;
+    [SerializeField]
+    RectTransform kyuukonImage;
+    [SerializeField]
+    RectTransform kyuukonIcon;
     int plantTulipCount = 0;
     int getTulipCount = 0;
     public int kyuukonCount = 0;
     int totalKyuukonCount = 0;
+    int kyuukonPerTulip = 3;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
@@ -186,9 +196,19 @@ public class GameManager : MonoBehaviour
             tulipList.Remove(tulip);
             Destroy(tulip.gameObject);
             getTulipCount++;
-            // Ç∆ÇËÇ†Ç¶Ç∏2å¬ëùÇ‚Ç∑
-            kyuukonCount += 2;
-            totalKyuukonCount += 2;
+            kyuukonCount += kyuukonPerTulip;
+            totalKyuukonCount += kyuukonPerTulip;
+            // éÊìæÇµÇΩãÖç™ÇÃï\é¶
+            Vector3 targetPos = kyuukonImage.position;
+            // ÉâÉìÉ_ÉÄÇ»ï˚å¸
+            float randamDeg = Random.Range(0f, 360f);
+            for (int i = 0; i < kyuukonPerTulip; i++)
+            {
+                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage);
+                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.3f);
+                kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
+                kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() => Destroy(kyuukonRect.gameObject));
+            }
         }
     }
 
@@ -204,6 +224,8 @@ public class GameManager : MonoBehaviour
             walls.localScale = Vector3.one * Camera.main.orthographicSize;
             landPrice = Mathf.FloorToInt(landPrice * landMag);
             landText.text = $"ìyín({landPrice}T)";
+            landWidth = landBaseWidth * Camera.main.orthographicSize;
+            landHeight = landBaseHeight * Camera.main.orthographicSize;
         }
     }
 

@@ -10,6 +10,8 @@ public class Drone : MonoBehaviour
     Vector3 dir = Vector3.right;
     float loopTime = 0;
     bool loopFlag = false;
+    float width = 0.3f;
+    float height = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +32,27 @@ public class Drone : MonoBehaviour
                 //dir = Quaternion.Euler(0, 0, Random.Range(-30f, 30f)) * dir;
             }
         }
+
         transform.position += dir * speed * Time.deltaTime;
+        if (transform.position.x + width > GameManager.landWidth)
+        {
+            dir.x = -Mathf.Abs(dir.x);
+        }
+        if (transform.position.x - width < -GameManager.landWidth)
+        {
+            dir.x = Mathf.Abs(dir.x);
+        }
+        if (transform.position.y + height > GameManager.landHeight)
+        {
+            dir.y = -Mathf.Abs(dir.y);
+        }
+        if (transform.position.y - height < -GameManager.landHeight)
+        {
+            dir.y = Mathf.Abs(dir.y);
+        }
     }
 
+    /*
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
@@ -58,4 +78,5 @@ public class Drone : MonoBehaviour
             //dir = Quaternion.Euler(0, 0, Random.Range(-10f, 10f)) * dir;
         }
     }
+    */
 }
