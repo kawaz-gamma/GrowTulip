@@ -106,6 +106,11 @@ namespace Save
             return true;
         }
 
+        public void DeleteSaveData()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
         public void Save()
         {
             Save(KyuukonCount, nameof(KyuukonCount));
