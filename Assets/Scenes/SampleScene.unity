@@ -4292,7 +4292,6 @@ MonoBehaviour:
   soujikiPrefab: {fileID: 1750414266801326366, guid: a5d89d4a52e8ee845a02d6055505cb18, type: 3}
   dronePrefab: {fileID: 3675413525597673146, guid: 75c2dfbee4daf1c4aa88f8f61d262066, type: 3}
   kyuukonCount: 1
-  tulipList: []
   soujikiList: []
   droneList: []
   walls: {fileID: 53592247}
