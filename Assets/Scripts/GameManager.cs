@@ -266,6 +266,7 @@ public class GameManager : MonoBehaviour
         if (EnablePlant(pos))
         {
             ForcePlantKyuukon(pos);
+            return true;
         }
         return false;
     }
