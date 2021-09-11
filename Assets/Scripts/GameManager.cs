@@ -62,12 +62,23 @@ public class GameManager : MonoBehaviour
         instance = this;
         // ÇÕÇ∂ÇﬂÇ…âΩå¬Ç©éùÇ¡ÇƒÇ¢ÇÈ
         //kyuukonCount = 1;
-        totalKyuukonCount = kyuukonCount;
+        //totalKyuukonCount = kyuukonCount;
     }
 
     // Update is called once per frame
     void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Time.timeScale = 5f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+#endif
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
 
