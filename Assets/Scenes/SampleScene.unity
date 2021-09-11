@@ -4527,12 +4527,12 @@ MonoBehaviour:
   sSpeedText: {fileID: 835873920}
   dSpeedText: {fileID: 717776184}
   tSpeedText: {fileID: 1088229937}
-  landButton: {fileID: 235586063}
-  soujikiButton: {fileID: 858080492}
-  droneButton: {fileID: 842447270}
-  sSpeedButton: {fileID: 1375178650}
-  dSpeedButton: {fileID: 1454656363}
-  tSpeedButton: {fileID: 454198504}
+  landButton: {fileID: 235586065}
+  soujikiButton: {fileID: 858080494}
+  droneButton: {fileID: 842447272}
+  sSpeedButton: {fileID: 1375178652}
+  dSpeedButton: {fileID: 1454656365}
+  tSpeedButton: {fileID: 454198506}
   optionPanel: {fileID: 1879646793}
 --- !u!4 &1444128186
 Transform:

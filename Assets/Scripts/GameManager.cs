@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     int plantTulipCount = 0;
     int getTulipCount = 0;
     public int kyuukonCount = 0;
-    public static int totalKyuukonCount = 0;
+    public static int totalKyuukonCount { get; private set; } = 0;
     int kyuukonPerTulip = 2;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
@@ -66,17 +66,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     TMP_Text tSpeedText;
     [SerializeField]
-    GameObject landButton;
+    Button landButton;
     [SerializeField]
-    GameObject soujikiButton;
+    Button soujikiButton;
     [SerializeField]
-    GameObject droneButton;
+    Button droneButton;
     [SerializeField]
-    GameObject sSpeedButton;
+    Button sSpeedButton;
     [SerializeField]
-    GameObject dSpeedButton;
+    Button dSpeedButton;
     [SerializeField]
-    GameObject tSpeedButton;
+    Button tSpeedButton;
 
     [SerializeField]
     RectTransform optionPanel;
@@ -152,36 +152,42 @@ public class GameManager : MonoBehaviour
         }
 
         // ボタン表示
-        if (!landButton.activeSelf && kyuukonCount > landPrice)
+        if (!landButton.gameObject.activeSelf && kyuukonCount > landPrice)
         {
-            landButton.SetActive(true);
+            landButton.gameObject.SetActive(true);
             landText.text = $"土地({landPrice}T)";
         }
-        if (!soujikiButton.activeSelf && kyuukonCount > soujikiPrice)
+        landButton.interactable = kyuukonCount > landPrice;
+        if (!soujikiButton.gameObject.activeSelf && kyuukonCount > soujikiPrice)
         {
-            soujikiButton.SetActive(true);
+            soujikiButton.gameObject.SetActive(true);
             soujikiText.text = $"自動収穫機({soujikiPrice}T)";
         }
-        if (!droneButton.activeSelf && kyuukonCount > dronePrice)
+        soujikiButton.interactable = kyuukonCount > soujikiPrice;
+        if (!droneButton.gameObject.activeSelf && kyuukonCount > dronePrice)
         {
-            droneButton.SetActive(true);
+            droneButton.gameObject.SetActive(true);
             droneText.text = $"自動種まき機({dronePrice}T)";
         }
-        if (!sSpeedButton.activeSelf && kyuukonCount > sSpeedPrice)
+        droneButton.interactable = kyuukonCount > dronePrice;
+        if (!sSpeedButton.gameObject.activeSelf && kyuukonCount > sSpeedPrice)
         {
-            sSpeedButton.SetActive(true);
+            sSpeedButton.gameObject.SetActive(true);
             sSpeedText.text = $"収穫機スピードアップ({sSpeedPrice}T)";
         }
-        if (!dSpeedButton.activeSelf && kyuukonCount > dSpeedPrice)
+        sSpeedButton.interactable = kyuukonCount > sSpeedPrice;
+        if (!dSpeedButton.gameObject.activeSelf && kyuukonCount > dSpeedPrice)
         {
-            dSpeedButton.SetActive(true);
+            dSpeedButton.gameObject.SetActive(true);
             dSpeedText.text = $"種まき機スピードアップ({dSpeedPrice}T)";
         }
-        if (!tSpeedButton.activeSelf && kyuukonCount > tSpeedPrice)
+        dSpeedButton.interactable = kyuukonCount > dSpeedPrice;
+        if (!tSpeedButton.gameObject.activeSelf && kyuukonCount > tSpeedPrice)
         {
-            tSpeedButton.SetActive(true);
+            tSpeedButton.gameObject.SetActive(true);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
         }
+        tSpeedButton.interactable = kyuukonCount > tSpeedPrice;
         kyuukonCountText.text = $"{kyuukonCount}";
 
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
