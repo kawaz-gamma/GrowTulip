@@ -4286,7 +4286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a428a00a902e112459849d0531931a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSaveData: 1
+  loadSaveData: 0
   saveIntervalSec: 10
   tulipPrefab: {fileID: 6090787846094601671, guid: 36465eb6ae34ed6498b39356e6533968, type: 3}
   soujikiPrefab: {fileID: 1750414266801326366, guid: a5d89d4a52e8ee845a02d6055505cb18, type: 3}
