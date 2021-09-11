@@ -19,9 +19,14 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public void ChangeVolume(float value)
+    public void ChangeBGMVolume(float value)
     {
         audioMixer.SetFloat("BGM", ConvertVolume2dB(value));
+    }
+
+    public void ChangeSEVolume(float value)
+    {
+        audioMixer.SetFloat("SE", ConvertVolume2dB(value));
     }
 
     // 0 ~ 1の値をdB( デシベル )に変換.

@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using KoitanLib;
 using TMPro;
+using DG.Tweening;
+
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private bool loadSaveData = true;
+    [SerializeField]
+    private float saveIntervalSec = 10.0f;
+    private TadaLib.Timer saveTimer;
+
     public static GameManager instance;
     [SerializeField]
     Tulip tulipPrefab;
@@ -57,12 +65,25 @@ public class GameManager : MonoBehaviour
     GameObject dSpeedButton;
     [SerializeField]
     GameObject tSpeedButton;
+
+    [SerializeField]
+    RectTransform optionPanel;
+
     void Awake()
     {
         instance = this;
         // はじめに何個か持っている
         //kyuukonCount = 1;
         //totalKyuukonCount = kyuukonCount;
+    }
+
+    private void Start()
+    {
+        if (loadSaveData)
+        {
+            TryLoad();
+        }
+        saveTimer = new TadaLib.Timer(saveIntervalSec);
     }
 
     // Update is called once per frame
@@ -78,6 +99,14 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
         }
 #endif
+
+        // セーブする
+        if (saveTimer.IsTimeout())
+        {
+            Debug.Log("save");
+            Save();
+            saveTimer.TimeReset();
+        }
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
@@ -245,6 +274,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenOptionPanel()
+    {
+        optionPanel.gameObject.SetActive(true);
+        optionPanel.localScale = Vector3.zero;
+        optionPanel.DOScale(Vector3.one, 0.25f);
+    }
+
+    public void CloseOptionPanel()
+    {
+        optionPanel.DOScale(Vector3.zero, 0.25f).OnComplete(() => optionPanel.gameObject.SetActive(false));
+    }
+
     public bool EnablePlant(Vector3 pos)
     {
         if (kyuukonCount > 0)
@@ -279,6 +320,64 @@ public class GameManager : MonoBehaviour
             ForcePlantKyuukon(pos);
             return true;
         }
+        return false;
+    }
+
+    void Save()
+    {
+        var data = global::Save.SaveData.CreateZeroValue();
+        data.KyuukonCount = kyuukonCount;
+        data.TotalKyuukonCount = totalKyuukonCount;
+        data.LandScale = Camera.main.orthographicSize;
+        data.LandPrice = landPrice;
+        data.SoujikiCount = soujikiList.Count;
+        data.SoujikiPrice = soujikiPrice;
+        data.DroneCount = droneList.Count;
+        data.DronePrice = dronePrice;
+        data.SoujikiSpeed = Soujiki.speed;
+        data.SoujikiSpeedPrice = sSpeedPrice;
+        data.DroneSpeed = Drone.speed;
+        data.DroneSpeedPrice = dSpeedPrice;
+        data.TulipSpeed = Tulip.tulipTime;
+        data.TulipSpeedPrice = tSpeedPrice;
+
+        data.Save();
+    }
+
+    bool TryLoad()
+    {
+        // セーブデータがあればロードする
+        if (global::Save.SaveData.HasSaveData())
+        {
+            var data = global::Save.SaveData.Load();
+
+            kyuukonCount = data.KyuukonCount;
+            totalKyuukonCount = data.TotalKyuukonCount;
+            Camera.main.orthographicSize = data.LandScale;
+            walls.localScale = Vector3.one * data.LandScale;
+            landPrice = data.LandPrice;
+            for (int idx = 0; idx < data.SoujikiCount; ++idx)
+            {
+                var soujiki = Instantiate(soujikiPrefab);
+                soujikiList.Add(soujiki);
+            }
+            soujikiPrice = data.SoujikiPrice;
+            for (int idx = 0; idx < data.DroneCount; ++idx)
+            {
+                var drone = Instantiate(dronePrefab);
+                droneList.Add(drone);
+            }
+            dronePrice = data.DronePrice;
+            Soujiki.speed = data.SoujikiSpeed;
+            sSpeedPrice = data.SoujikiSpeedPrice;
+            Drone.speed = data.DroneSpeed;
+            dSpeedPrice = data.DroneSpeedPrice;
+            Tulip.tulipTime = data.TulipSpeed;
+            tSpeedPrice = data.TulipSpeedPrice;
+
+            return true;
+        }
+
         return false;
     }
 }
