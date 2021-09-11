@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1362247980}
   - component: {fileID: 1362247979}
+  - component: {fileID: 7465343753450634384}
   m_Layer: 0
   m_Name: flower_tulip_kyuukon
   m_TagString: Untagged
@@ -83,12 +84,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+
 --- !u!1 &2093904393145011873
 GameObject:
+
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4594686380221171632}
@@ -212,7 +216,7 @@ Animator:
   m_GameObject: {fileID: 3678060682318367201}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 135e1ddacce50154ebe78b8668d1e36f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6b7baaf060e96b5468082656b622c4c6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
