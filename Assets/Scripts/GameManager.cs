@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     RectTransform optionPanel;
 
+    KyuukonCountPerTime counterPerTime;
+
     void Awake()
     {
         instance = this;
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
             TryLoad();
         }
         saveTimer = new TadaLib.Timer(saveIntervalSec);
+        counterPerTime= new KyuukonCountPerTime(10, 0.1f);
     }
 
     // Update is called once per frame
@@ -192,7 +195,7 @@ public class GameManager : MonoBehaviour
 
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
         KoitanDebug.Display($"球根総獲得数 = {totalKyuukonCount}\n");
-        KoitanDebug.Display($"時間あたり球根獲得数 = {(totalKyuukonCount / Time.time):F2}\n");
+        KoitanDebug.Display($"時間あたり球根獲得数 = {counterPerTime.GetCount(totalKyuukonCount):F2}\n");
         //KoitanDebug.Display($"植えたチューリップの本数 = {plantTulipCount}\n");
         //KoitanDebug.Display($"収穫したチューリップの本数 = {getTulipCount}\n");
         KoitanDebug.Display($"タイム : {(int)Time.time}s\n");
