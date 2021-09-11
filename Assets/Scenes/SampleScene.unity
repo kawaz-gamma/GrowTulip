@@ -4516,6 +4516,7 @@ MonoBehaviour:
   dronePrefab: {fileID: 3675413525597673146, guid: 75c2dfbee4daf1c4aa88f8f61d262066, type: 3}
   kyuukonImage: {fileID: 1258251463}
   kyuukonIcon: {fileID: 4252236037423769579, guid: 85a2334c508637348bd12d03dcf20f83, type: 3}
+  kyuukonCountText: {fileID: 420495652}
   kyuukonCount: 1
   soujikiList: []
   droneList: []
