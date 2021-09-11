@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static float landBaseWidth = 1.25f;
     public static float landBaseHeight = 1f;
+    public static float landWidth = 2.5f;
+    public static float landHeight = 2f;
     [SerializeField]
     Tulip tulipPrefab;
     [SerializeField]
@@ -206,6 +208,8 @@ public class GameManager : MonoBehaviour
             walls.localScale = Vector3.one * Camera.main.orthographicSize;
             landPrice = Mathf.FloorToInt(landPrice * landMag);
             landText.text = $"“y’n({landPrice}T)";
+            landWidth = landBaseWidth * Camera.main.orthographicSize;
+            landHeight = landBaseHeight * Camera.main.orthographicSize;
         }
     }
 

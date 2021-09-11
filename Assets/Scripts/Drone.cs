@@ -10,6 +10,7 @@ public class Drone : MonoBehaviour
     Vector3 dir = Vector3.right;
     float loopTime = 0;
     bool loopFlag = false;
+    float width = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +32,14 @@ public class Drone : MonoBehaviour
             }
         }
         transform.position += dir * speed * Time.deltaTime;
+        /*
+        float landWidth = Camera.main.orthographicSize * GameManager.landBaseWidth;
+        float landHeight = Camera.main.orthographicSize * GameManager.landBaseHeight;
+        */
+        //if(transform.position.x)
     }
 
-    /*
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
@@ -59,5 +65,5 @@ public class Drone : MonoBehaviour
             //dir = Quaternion.Euler(0, 0, Random.Range(-10f, 10f)) * dir;
         }
     }
-    */
+
 }
