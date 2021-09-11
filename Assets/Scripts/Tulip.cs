@@ -16,6 +16,8 @@ public class Tulip : MonoBehaviour
     float lifeTime = 0;
     public static float tulipTime = 5f;
     public static float tulipTimeMag = 1.5f;
+    public int id;
+
     // Start is called before the first frame update
     void Start()
     {

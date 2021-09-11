@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     int getTulipCount = 0;
     public int kyuukonCount = 0;
     int totalKyuukonCount = 0;
-    public List<Tulip> tulipList = new List<Tulip>();
+    public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
     int landPrice = 5;
