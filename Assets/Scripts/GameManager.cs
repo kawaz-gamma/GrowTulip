@@ -4,6 +4,7 @@ using UnityEngine;
 using KoitanLib;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,10 +25,15 @@ public class GameManager : MonoBehaviour
     Soujiki soujikiPrefab;
     [SerializeField]
     Drone dronePrefab;
+    [SerializeField]
+    RectTransform kyuukonImage;
+    [SerializeField]
+    RectTransform kyuukonIcon;
     int plantTulipCount = 0;
     int getTulipCount = 0;
     public int kyuukonCount = 0;
     int totalKyuukonCount = 0;
+    int kyuukonPerTulip = 3;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
@@ -190,9 +196,19 @@ public class GameManager : MonoBehaviour
             tulipList.Remove(tulip);
             Destroy(tulip.gameObject);
             getTulipCount++;
-            // ‚Æ‚è‚ ‚¦‚¸2ŒÂ‘‚â‚·
-            kyuukonCount += 2;
-            totalKyuukonCount += 2;
+            kyuukonCount += kyuukonPerTulip;
+            totalKyuukonCount += kyuukonPerTulip;
+            // æ“¾‚µ‚½‹…ª‚Ì•\¦
+            Vector3 targetPos = kyuukonImage.position;
+            // ƒ‰ƒ“ƒ_ƒ€‚È•ûŒü
+            float randamDeg = Random.Range(0f, 360f);
+            for (int i = 0; i < kyuukonPerTulip; i++)
+            {
+                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage);
+                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.3f);
+                kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
+                kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() => Destroy(kyuukonRect.gameObject));
+            }
         }
     }
 
