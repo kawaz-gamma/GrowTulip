@@ -11,6 +11,10 @@ public class Tulip : MonoBehaviour
     GameObject tulipSprite;
     [SerializeField]
     Collider2D collider;
+    Animator animator;
+    //[SerializeField]
+    //AnimatorStateTransition ast;
+    
     float lifeTime = 0;
     public static float tulipTime = 5f;
     public static float tulipTimeMag = 1.5f;
@@ -21,6 +25,7 @@ public class Tulip : MonoBehaviour
         //collider.enabled = false;
         kyuukonSprite.SetActive(true);
         tulipSprite.SetActive(false);
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,6 +35,9 @@ public class Tulip : MonoBehaviour
         {
             case TulipState.Kyuukon:
                 lifeTime += Time.deltaTime;
+                animator.SetFloat("TimeLeft", 1 - (tulipTime - lifeTime));
+                //animator.GetAnimatorTransitionInfo
+
                 if (lifeTime > tulipTime)
                 {
                     state = TulipState.Tulip;
