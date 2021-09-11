@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     float dSpeedMag = 1.5f;
     int tSpeedPrice = 50;
     float tSpeedMag = 1.5f;
+    int kPerPrice = 100;
+    float kPerMag = 1.5f;
     [SerializeField]
     Transform walls;
     [SerializeField]
@@ -66,6 +68,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     TMP_Text tSpeedText;
     [SerializeField]
+    TMP_Text kPerText;
+    [SerializeField]
     Button landButton;
     [SerializeField]
     Button soujikiButton;
@@ -77,6 +81,8 @@ public class GameManager : MonoBehaviour
     Button dSpeedButton;
     [SerializeField]
     Button tSpeedButton;
+    [SerializeField]
+    Button kPerButton;
 
     [SerializeField]
     RectTransform optionPanel;
@@ -98,7 +104,7 @@ public class GameManager : MonoBehaviour
             TryLoad();
         }
         saveTimer = new TadaLib.Timer(saveIntervalSec);
-        counterPerTime= new KyuukonCountPerTime(10, 0.1f);
+        counterPerTime = new KyuukonCountPerTime(10, 0.1f);
     }
 
     // Update is called once per frame
@@ -190,7 +196,14 @@ public class GameManager : MonoBehaviour
             tSpeedButton.gameObject.SetActive(true);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
         }
-        tSpeedButton.interactable = kyuukonCount > tSpeedPrice;
+        kPerButton.interactable = kyuukonCount > kPerPrice;
+        if (!kPerButton.gameObject.activeSelf && kyuukonCount > kPerPrice)
+        {
+            kPerButton.gameObject.SetActive(true);
+            kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
+        }
+        kPerButton.interactable = kyuukonCount > kPerPrice;
+
         kyuukonCountText.text = $"{kyuukonCount}";
 
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
@@ -215,7 +228,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < kyuukonPerTulip; i++)
             {
                 var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage.root);
-                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.3f);
+                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
                 kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
                 {
@@ -312,6 +325,17 @@ public class GameManager : MonoBehaviour
             tSpeedPrice = Mathf.FloorToInt(tSpeedPrice * tSpeedMag);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
             Tulip.tulipTime /= Tulip.tulipTimeMag;
+        }
+    }
+
+    public void BuyKPerUp()
+    {
+        if (kyuukonCount > kPerPrice)
+        {
+            kyuukonCount -= kPerPrice;
+            kPerPrice = Mathf.FloorToInt(kPerPrice * kPerMag);
+            kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
+            kyuukonPerTulip += 1;
         }
     }
 
