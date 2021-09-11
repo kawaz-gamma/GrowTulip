@@ -33,6 +33,7 @@ public class Drone : MonoBehaviour
         transform.position += dir * speed * Time.deltaTime;
     }
 
+    /*
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
@@ -58,4 +59,5 @@ public class Drone : MonoBehaviour
             //dir = Quaternion.Euler(0, 0, Random.Range(-10f, 10f)) * dir;
         }
     }
+    */
 }

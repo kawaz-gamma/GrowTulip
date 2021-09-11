@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private TadaLib.Timer saveTimer;
 
     public static GameManager instance;
+    public static float landBaseWidth = 1.25f;
+    public static float landBaseHeight = 1f;
     [SerializeField]
     Tulip tulipPrefab;
     [SerializeField]
