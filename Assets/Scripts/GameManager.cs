@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KoitanLib;
 using TMPro;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,6 +66,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject tSpeedButton;
 
+    [SerializeField]
+    RectTransform optionPanel;
+
     void Awake()
     {
         instance = this;
@@ -97,7 +101,8 @@ public class GameManager : MonoBehaviour
 #endif
 
         // ƒZ[ƒu‚·‚é
-        if (saveTimer.IsTimeout()) {
+        if (saveTimer.IsTimeout())
+        {
             Debug.Log("save");
             Save();
             saveTimer.TimeReset();
@@ -269,6 +274,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenOptionPanel()
+    {
+        optionPanel.gameObject.SetActive(true);
+        optionPanel.localScale = Vector3.zero;
+        optionPanel.DOScale(Vector3.one, 0.25f);
+    }
+
+    public void CloseOptionPanel()
+    {
+        optionPanel.DOScale(Vector3.zero, 0.25f).OnComplete(() => optionPanel.gameObject.SetActive(false));
+    }
+
     public bool EnablePlant(Vector3 pos)
     {
         if (kyuukonCount > 0)
@@ -345,7 +362,7 @@ public class GameManager : MonoBehaviour
                 soujikiList.Add(soujiki);
             }
             soujikiPrice = data.SoujikiPrice;
-            for(int idx = 0; idx < data.DroneCount; ++idx)
+            for (int idx = 0; idx < data.DroneCount; ++idx)
             {
                 var drone = Instantiate(dronePrefab);
                 droneList.Add(drone);
