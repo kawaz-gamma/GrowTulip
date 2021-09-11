@@ -29,11 +29,13 @@ public class GameManager : MonoBehaviour
     RectTransform kyuukonImage;
     [SerializeField]
     RectTransform kyuukonIcon;
+    [SerializeField]
+    TMP_Text kyuukonCountText;
     int plantTulipCount = 0;
     int getTulipCount = 0;
     public int kyuukonCount = 0;
-    int totalKyuukonCount = 0;
-    int kyuukonPerTulip = 3;
+    public static int totalKyuukonCount = 0;
+    int kyuukonPerTulip = 2;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
@@ -180,6 +182,7 @@ public class GameManager : MonoBehaviour
             tSpeedButton.SetActive(true);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
         }
+        kyuukonCountText.text = $"{kyuukonCount}";
 
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
         KoitanDebug.Display($"球根総獲得数 = {totalKyuukonCount}\n");
@@ -196,18 +199,25 @@ public class GameManager : MonoBehaviour
             tulipList.Remove(tulip);
             Destroy(tulip.gameObject);
             getTulipCount++;
-            kyuukonCount += kyuukonPerTulip;
-            totalKyuukonCount += kyuukonPerTulip;
             // 取得した球根の表示
             Vector3 targetPos = kyuukonImage.position;
             // ランダムな方向
             float randamDeg = Random.Range(0f, 360f);
             for (int i = 0; i < kyuukonPerTulip; i++)
             {
-                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage);
+                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage.root);
                 kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.3f);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
-                kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() => Destroy(kyuukonRect.gameObject));
+                kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
+                {
+                    Destroy(kyuukonRect.gameObject);
+                    kyuukonCount++;
+                    totalKyuukonCount++;
+                    /*
+                    kyuukonImage.localScale = Vector3.one;
+                    kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
+                    */
+                });
             }
         }
     }
