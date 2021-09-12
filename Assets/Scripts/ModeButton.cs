@@ -26,13 +26,16 @@ public class ModeButton : MonoBehaviour
     [SerializeField]
     private MonoColorChanger optionButtonBack;
 
-
+    private void Start()
+    {
+        PurchaseButtonClicked();
+    }
 
     public void PurchaseButtonClicked()
     {
         purchaseUI.SetActive(true);
         purchaseButton.ToWhiteColor();
-        purchaseButton.ToBlackColor();
+        purchaseButtonBack.ToBlackColor();
 
         rankUI.SetActive(false);
         rankButton.ToBlackColor();
@@ -47,7 +50,7 @@ public class ModeButton : MonoBehaviour
     {
         purchaseUI.SetActive(false);
         purchaseButton.ToBlackColor();
-        purchaseButton.ToWhiteColor();
+        purchaseButtonBack.ToWhiteColor();
 
         rankUI.SetActive(true);
         rankButton.ToWhiteColor();
@@ -62,7 +65,7 @@ public class ModeButton : MonoBehaviour
     {
         purchaseUI.SetActive(false);
         purchaseButton.ToBlackColor();
-        purchaseButton.ToWhiteColor();
+        purchaseButtonBack.ToWhiteColor();
 
         rankUI.SetActive(false);
         rankButton.ToBlackColor();
