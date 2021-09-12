@@ -540,7 +540,7 @@ public class GameManager : MonoBehaviour
         {
             var data = global::Save.SaveData.Load();
 
-            kyuukonCount = data.KyuukonCount;
+            kyuukonCount = Mathf.Max(1, data.KyuukonCount);
             totalKyuukonCount = data.TotalKyuukonCount;
             Camera.main.orthographicSize = data.LandScale;
             walls.localScale = Vector3.one * data.LandScale;

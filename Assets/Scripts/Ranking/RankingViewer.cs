@@ -105,11 +105,38 @@ namespace Ranking
             }
 
             var board = rankingBoards.GetRankingInfo((int)type);
-            yield return SendScore(board);
-            yield return ReceiveScore(board);
+            var highScore = 0;
+            // ハイスコアかどうか計算
+            bool isHighScore = false;
+            highScore = -1;
+            {
+                var hiScoreCheck = new YieldableNcmbQuery<NCMB.NCMBObject>(board.ClassName);
+                hiScoreCheck.WhereEqualTo(OBJECT_ID, ObjectID);
+                yield return hiScoreCheck.FindAsync();
+
+                if (hiScoreCheck.Count > 0)
+                {
+                    // 得点の計算
+                    foreach (var r in hiScoreCheck.Result)
+                    {
+                        highScore = Mathf.Max(highScore, int.Parse(r[COLUMN_SCORE].ToString()));
+
+                        isHighScore = (scoreGetter.Score > int.Parse(r[COLUMN_SCORE].ToString()));
+                        break;
+                    }
+                }
+                else
+                {
+                    // 最初のスコア
+                    isHighScore = true;
+                }
+            }
+
+            yield return SendScore(board, isHighScore);
+            yield return ReceiveScore(board, highScore);
         }
 
-        IEnumerator SendScore(naichilab.RankingInfo board)
+        IEnumerator SendScore(naichilab.RankingInfo board, bool isHighScore)
         {
             var score = new naichilab.NumberScore(scoreGetter.Score, board.CustomFormat);
 
@@ -118,28 +145,31 @@ namespace Ranking
                 throw new System.ArgumentException("スコアの型が違います。");
             }
 
-            var record = new NCMB.NCMBObject(board.ClassName);
-            record.ObjectId = ObjectID;
-
-            record[COLUMN_NAME] = userNameGetter.Name;
-            record[COLUMN_SCORE] = scoreGetter.Score;
-
-            NCMB.NCMBException errorResult = null;
-
-            yield return record.YieldableSaveAsync(error => errorResult = error);
-
-            if (errorResult != null)
+            if (isHighScore)
             {
-                //NCMBのコンソールから直接削除した場合に、該当のobjectIdが無いので発生する（らしい）
-                record.ObjectId = null;
-                yield return record.YieldableSaveAsync(error => errorResult = error); //新規として送信
-            }
+                var record = new NCMB.NCMBObject(board.ClassName);
+                record.ObjectId = ObjectID;
 
-            //ObjectIDを保存して次に備える
-            ObjectID = record.ObjectId;
+                record[COLUMN_NAME] = userNameGetter.Name;
+                record[COLUMN_SCORE] = scoreGetter.Score;
+
+                NCMB.NCMBException errorResult = null;
+
+                yield return record.YieldableSaveAsync(error => errorResult = error);
+
+                if (errorResult != null)
+                {
+                    //NCMBのコンソールから直接削除した場合に、該当のobjectIdが無いので発生する（らしい）
+                    record.ObjectId = null;
+                    yield return record.YieldableSaveAsync(error => errorResult = error); //新規として送信
+                }
+
+                //ObjectIDを保存して次に備える
+                ObjectID = record.ObjectId;
+            }
         }
 
-        IEnumerator ReceiveScore(naichilab.RankingInfo board)
+        IEnumerator ReceiveScore(naichilab.RankingInfo board, int highScore)
         {
             // ランキングの個数を取得
             var totalCount = 0;
@@ -167,7 +197,7 @@ namespace Ranking
 
                 {
                     var fetchEnd = false;
-                    query.WhereGreaterThan(COLUMN_SCORE, scoreGetter.Score);
+                    query.WhereGreaterThan(COLUMN_SCORE, highScore);
                     query.CountAsync((int count, NCMB.NCMBException e) =>
                     {
                         if (e != null)
