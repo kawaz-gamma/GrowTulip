@@ -121,9 +121,25 @@ namespace Save
             return true;
         }
 
-        public static void DeleteSaveData()
+        public void DeleteSaveData()
         {
-            PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteKey(nameof(KyuukonCount));
+            PlayerPrefs.DeleteKey(nameof(TotalKyuukonCount));
+            PlayerPrefs.DeleteKey(nameof(LandScale));
+            PlayerPrefs.DeleteKey(nameof(LandPrice));
+            PlayerPrefs.DeleteKey(nameof(SoujikiCount));
+            PlayerPrefs.DeleteKey(nameof(SoujikiPrice));
+            PlayerPrefs.DeleteKey(nameof(DroneCount));
+            PlayerPrefs.DeleteKey(nameof(DronePrice));
+            PlayerPrefs.DeleteKey(nameof(SoujikiSpeed));
+            PlayerPrefs.DeleteKey(nameof(SoujikiSpeedPrice));
+            PlayerPrefs.DeleteKey(nameof(DroneSpeed));
+            PlayerPrefs.DeleteKey(nameof(DroneSpeedPrice));
+            PlayerPrefs.DeleteKey(nameof(TulipSpeed));
+            PlayerPrefs.DeleteKey(nameof(TulipSpeedPrice));
+            PlayerPrefs.DeleteKey(nameof(KyuukonPerTulip));
+            PlayerPrefs.DeleteKey(nameof(KyuukonPerPrice));
+            PlayerPrefs.DeleteKey(nameof(UserName));
         }
 
         public void Save()
