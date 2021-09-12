@@ -5706,6 +5706,8 @@ MonoBehaviour:
   kPerButton: {fileID: 241962158}
   upgrades: []
   kyuuKonIconAnim: {fileID: 352374331}
+  kyuukonPerTimeText: {fileID: 1588903837}
+  timeText: {fileID: 372567138}
   optionPanel: {fileID: 1879646793}
   userName: {fileID: 1853826269}
   kyuukonIconPool: {fileID: 838794776}

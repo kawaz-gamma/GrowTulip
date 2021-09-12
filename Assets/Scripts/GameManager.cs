@@ -113,6 +113,12 @@ public class GameManager : MonoBehaviour
     Animator kyuuKonIconAnim;
 
     [SerializeField]
+    TMP_Text kyuukonPerTimeText;
+
+    [SerializeField]
+    TMP_Text timeText;
+
+    [SerializeField]
     RectTransform optionPanel;
 
     [SerializeField]
@@ -293,6 +299,8 @@ public class GameManager : MonoBehaviour
         kPerButton.interactable = kyuukonCount > kPerPrice;
 
         kyuukonCountText.text = $"{kyuukonCount}";
+        kyuukonPerTimeText.text = $"{CounterPerTime.GetCount(totalKyuukonCount):F1}T/s";
+        timeText.text = $"{(int)Time.timeSinceLevelLoad}s";
 
         KoitanDebug.Display($"‹…ª‚ÌŠ” = {kyuukonCount}\n");
         KoitanDebug.Display($"‹…ª‘Šl“¾” = {totalKyuukonCount}\n");
