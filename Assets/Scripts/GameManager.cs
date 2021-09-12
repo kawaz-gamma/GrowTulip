@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public static int totalKyuukonCount { get; private set; } = 0;
     public static float KyuukonPerTime => instance.CounterPerTime.GetCount(totalKyuukonCount);
 
-    int kyuukonPerTulip = 20;
+    int kyuukonPerTulip = 4;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
@@ -117,6 +117,11 @@ public class GameManager : MonoBehaviour
         //kyuukonCount = 1;
         //totalKyuukonCount = kyuukonCount;
         TryGetComponent(out audioSource);
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
     }
 
     private void Start()
@@ -299,10 +304,10 @@ public class GameManager : MonoBehaviour
             // ランダムな方向
             float randamDeg = Random.Range(0f, 360f);
             // 増やす数
-            int baseKyuukonCount = kyuukonPerTulip / 10;
-            int amari = kyuukonPerTulip % 10;
+            int baseKyuukonCount = kyuukonPerTulip / 2;
+            int amari = kyuukonPerTulip % 2;
             int initKyuukonCount = baseKyuukonCount;
-            if (getTulipCount % 10 < amari)
+            if (getTulipCount % 2 < amari)
             {
                 initKyuukonCount += 1;
             }
@@ -439,7 +444,7 @@ public class GameManager : MonoBehaviour
             kyuukonCount -= kPerPrice;
             kPerPrice = Mathf.FloorToInt(kPerPrice * kPerMag);
             kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
-            kyuukonPerTulip += 5;
+            kyuukonPerTulip += 1;
             audioSource.PlayOneShot(buySe);
         }
     }
