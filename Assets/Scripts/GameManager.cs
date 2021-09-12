@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private const float SAVE_INTERVAL_SEC = 10.0f;
     private TadaLib.Timer saveTimer;
+    [SerializeField]
+    private bool isKyuukonUi;
 
     // ‰¹
     AudioSource audioSource;
@@ -339,38 +341,29 @@ public class GameManager : MonoBehaviour
             {
                 initKyuukonCount += 1;
             }
-            for (int i = 0; i < initKyuukonCount; i++)
+            if (isKyuukonUi)
             {
-                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage);
-                kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
-                kyuukonRect.position = centerPos;
-                var seq = DOTween.Sequence();
-                seq.Append(kyuukonRect.DOMove(RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / initKyuukonCount) * Vector3.right * 0.15f * initKyuukonCount), 0.25f).SetEase(Ease.OutCubic))
-                   .AppendInterval(i * 0.2f)
-                   .Append(kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack))
-                   .OnComplete(() =>
-                   {
-                       kyuukonIconPool.DestroyObject(kyuukonRect.gameObject);
-                       kyuukonCount++;
-                       totalKyuukonCount++;
-                       /*
-                       kyuukonImage.localScale = Vector3.one;
-                       kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
-                       */
-                   });
-                /*
-                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip);
-                kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
-                  {
-                      Destroy(kyuukonRect.gameObject);
-                      kyuukonCount++;
-                      totalKyuukonCount++;
-                      *//*
-                      kyuukonImage.localScale = Vector3.one;
-                      kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
-                      *//*
-                  });*/
-
+                for (int i = 0; i < initKyuukonCount; i++)
+                {
+                    var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage);
+                    kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
+                    kyuukonRect.position = centerPos;
+                    var seq = DOTween.Sequence();
+                    seq.Append(kyuukonRect.DOMove(RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / initKyuukonCount) * Vector3.right * 0.15f * initKyuukonCount), 0.25f).SetEase(Ease.OutCubic))
+                       .AppendInterval(i * 0.2f)
+                       .Append(kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack))
+                       .OnComplete(() =>
+                       {
+                           kyuukonIconPool.DestroyObject(kyuukonRect.gameObject);
+                           kyuukonCount++;
+                           totalKyuukonCount++;
+                       });
+                }
+            }
+            else
+            {
+                kyuukonCount += initKyuukonCount;
+                totalKyuukonCount += initKyuukonCount;
             }
         }
     }
@@ -532,6 +525,12 @@ public class GameManager : MonoBehaviour
     public void PlayTulipSe()
     {
         audioSource.PlayOneShot(tulipSe);
+    }
+
+    //OnOff
+    public void SetKyuukonUi(bool b)
+    {
+        isKyuukonUi = b;
     }
 
     void Save()
