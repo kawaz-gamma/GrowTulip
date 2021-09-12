@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public static float landBaseHeight = 1f;
     public static float landWidth = 2.5f;
     public static float landHeight = 2f;
+
     [SerializeField]
     Tulip tulipPrefab;
     [SerializeField]
@@ -33,8 +34,7 @@ public class GameManager : MonoBehaviour
     Drone dronePrefab;
     [SerializeField]
     RectTransform kyuukonImage;
-    [SerializeField]
-    RectTransform kyuukonIcon;
+
     [SerializeField]
     TMP_Text kyuukonCountText;
     int plantTulipCount = 0;
@@ -109,6 +109,9 @@ public class GameManager : MonoBehaviour
     private Ranking.UserName userName;
 
     public KyuukonCountPerTime CounterPerTime { private set; get; }
+
+    [SerializeField]
+    private KyuukonIconPool kyuukonIconPool;
 
     void Awake()
     {
@@ -313,7 +316,7 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < initKyuukonCount; i++)
             {
-                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage);
+                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
                 kyuukonRect.position = centerPos;
                 var seq = DOTween.Sequence();
@@ -322,7 +325,7 @@ public class GameManager : MonoBehaviour
                    .Append(kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack))
                    .OnComplete(() =>
                    {
-                       Destroy(kyuukonRect.gameObject);
+                       kyuukonIconPool.DestroyObject(kyuukonRect.gameObject);
                        kyuukonCount++;
                        totalKyuukonCount++;
                        /*
