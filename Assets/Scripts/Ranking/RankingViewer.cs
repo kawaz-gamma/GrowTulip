@@ -128,10 +128,53 @@ namespace Ranking
 
         IEnumerator ReceiveScore(naichilab.RankingInfo board)
         {
+            // ランキングの個数を取得
+            var totalCount = 0;
+            {
+                var fetchEnd = false;
+                NCMB.NCMBQuery<NCMB.NCMBObject> query = new NCMB.NCMBQuery<NCMB.NCMBObject>(board.ClassName);
+                query.CountAsync((int count, NCMB.NCMBException e) =>
+                {
+                    if (e != null)
+                    {
+                    }
+                    else
+                    {
+                        totalCount = count;
+                        fetchEnd = true;
+                    }
+                });
+
+                yield return new WaitUntil(() => fetchEnd);
+            }
+
+            // 自分の順位を取得
+            var myRank = 0;
+            {
+                var fetchEnd = false;
+                NCMB.NCMBQuery<NCMB.NCMBObject> query = new NCMB.NCMBQuery<NCMB.NCMBObject>(board.ClassName);
+                query.WhereGreaterThan(COLUMN_SCORE, scoreGetter.Score);
+                query.CountAsync((int count, NCMB.NCMBException e) =>
+                {
+                    if(e != null)
+                    {
+                        Debug.Log("自分の順位を取得失敗");
+                    }
+                    else
+                    {
+                        myRank = count;
+                        fetchEnd = true;
+                    }
+                });
+
+                yield return new WaitUntil(() => fetchEnd);
+            }
+
             // ランキングボード情報の取得 & 文字列更新
             var so = new NCMB.Extensions.YieldableNcmbQuery<NCMB.NCMBObject>(board.ClassName);
-            so.Limit = 10;
-            // so.Skip = 10; // 取得開始場所を指定。プレイヤーの順位のひとつ前から始めたい
+            so.Limit = 3;
+            var skipCount = Mathf.Clamp(myRank - so.Limit / 2, 0, totalCount - 1);
+            so.Skip = skipCount;
             so.OrderByDescending(COLUMN_SCORE);
 
             yield return so.FindAsync();
@@ -147,7 +190,7 @@ namespace Ranking
                 }
 
 
-                string text = $"{idx + 1}  {r[COLUMN_NAME].ToString()}  {r[COLUMN_SCORE]}";
+                string text = $"{idx + 1 + skipCount}  {r[COLUMN_NAME].ToString()}  {r[COLUMN_SCORE]}";
                 if (r.ObjectId == ObjectID)
                 {
                     text = "<color=yellow>" + text + "</color>";
