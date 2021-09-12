@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class KyuukonCountPerTime
+public class KyuukonCountPerTime
 {
     const int MAX_COUNT = 1000;
     LinkedList<KyuukonCountUnit> list;
