@@ -260,9 +260,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -420,11 +420,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 127608507}
   - {fileID: 1380589040}
   - {fileID: 222880182}
   - {fileID: 1965394912}
   - {fileID: 810172556}
-  - {fileID: 127608507}
   - {fileID: 1659626089}
   - {fileID: 344213015}
   - {fileID: 1879646793}
@@ -468,7 +468,7 @@ RectTransform:
   - {fileID: 420495651}
   - {fileID: 1258251463}
   m_Father: {fileID: 105605439}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -600,9 +600,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -959,7 +959,7 @@ RectTransform:
   m_Children:
   - {fileID: 222765351}
   m_Father: {fileID: 105605439}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1378,7 +1378,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 235586066}
   m_OnClick:
     m_PersistentCalls:
@@ -1491,7 +1491,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 241962159}
   m_OnClick:
     m_PersistentCalls:
@@ -2371,7 +2371,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 454198507}
   m_OnClick:
     m_PersistentCalls:
@@ -2612,9 +2612,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -3080,7 +3080,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7A2E\u307E\u304D\u6A5F\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=7.771477>T<space=-19.15477><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-7.771477></nobr>)"
+  m_text: "\u7A2E\u307E\u304D\u6A5F\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=7.772725>T<space=-19.15602><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-7.772725></nobr>)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
   m_sharedMaterial: {fileID: 5204504407756332563, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
@@ -3112,7 +3112,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 72
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -3527,7 +3527,7 @@ RectTransform:
   m_Children:
   - {fileID: 726392314}
   m_Father: {fileID: 105605439}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3854,7 +3854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u53CE\u7A6B\u6A5F\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=8.226076>T<space=-20.27524><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-8.226076></nobr>)"
+  m_text: "\u53CE\u7A6B\u6A5F\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=8.227396>T<space=-20.27656><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-8.227396></nobr>)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
   m_sharedMaterial: {fileID: 5204504407756332563, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
@@ -3886,7 +3886,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 72
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -4015,7 +4015,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 842447273}
   m_OnClick:
     m_PersistentCalls:
@@ -4284,7 +4284,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 858080495}
   m_OnClick:
     m_PersistentCalls:
@@ -4975,7 +4975,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=7.771477>T<space=-19.15477><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-7.771477></nobr>)"
+  m_text: "\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u30B9\u30D4\u30FC\u30C9\u30A2\u30C3\u30D7(30<nobr><space=7.772725>T<space=-19.15602><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-7.772725></nobr>)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
   m_sharedMaterial: {fileID: 5204504407756332563, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
@@ -5007,7 +5007,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 72
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -5420,7 +5420,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1375178653}
   m_OnClick:
     m_PersistentCalls:
@@ -5505,7 +5505,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 105605439}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5932,7 +5932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a428a00a902e112459849d0531931a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSaveData: 1
+  loadSaveData: 0
   saveIntervalSec: 10
   getSe: {fileID: 8300000, guid: f927eb1d529bfbc4e8199d20ca3a2b59, type: 3}
   buySe: {fileID: 8300000, guid: 567d1ec4e1ff32947bc20e69de6dadab, type: 3}
@@ -5960,6 +5960,7 @@ MonoBehaviour:
   dSpeedButton: {fileID: 1454656365}
   tSpeedButton: {fileID: 454198506}
   kPerButton: {fileID: 241962158}
+  upgrades: []
   optionPanel: {fileID: 1879646793}
   userName: {fileID: 1853826269}
 --- !u!4 &1444128186
@@ -6162,7 +6163,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1454656366}
   m_OnClick:
     m_PersistentCalls:
@@ -6635,7 +6636,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7403\u6839\u7372\u5F97\u6570\u30A2\u30C3\u30D7(30<nobr><space=9.763054>T<space=-24.06351><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-9.763054></nobr>)"
+  m_text: "\u7403\u6839\u7372\u5F97\u6570\u30A2\u30C3\u30D7(30<nobr><space=9.76462>T<space=-24.06508><voffset=1em><size=50%>\u3061\u3085\u3046</size></voffset><space=-9.76462></nobr>)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
   m_sharedMaterial: {fileID: 5204504407756332563, guid: 637fb4956600b45b28af8250b2d94095, type: 2}
@@ -6667,7 +6668,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 72
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -7811,7 +7812,7 @@ RectTransform:
   m_Children:
   - {fileID: 825756908}
   m_Father: {fileID: 105605439}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

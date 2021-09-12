@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public static int totalKyuukonCount { get; private set; } = 0;
     public static float KyuukonPerTime => instance.CounterPerTime.GetCount(totalKyuukonCount);
 
-    int kyuukonPerTulip = 2;
+    int kyuukonPerTulip = 20;
     public TulipList tulipList = new TulipList();
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
     bool sSpeedKnown;
     bool dSpeedKnown;
     bool tSpeedKnown;
-    bool kSpeedKnown;
     bool kPerKnown;
     [SerializeField]
     Transform walls;
@@ -99,6 +98,9 @@ public class GameManager : MonoBehaviour
     Button tSpeedButton;
     [SerializeField]
     Button kPerButton;
+
+    [SerializeField]
+    UpgradeButton[] upgrades;
 
     [SerializeField]
     RectTransform optionPanel;
@@ -181,6 +183,12 @@ public class GameManager : MonoBehaviour
         }
 
         // ボタン表示
+        /*
+        for (int i = 0; i < upgrades.Length; i++)
+        {
+
+        }
+        */
         // 土地
         if (!landButton.gameObject.activeSelf)
         {
@@ -290,13 +298,21 @@ public class GameManager : MonoBehaviour
             Vector3 centerPos = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position);
             // ランダムな方向
             float randamDeg = Random.Range(0f, 360f);
-            for (int i = 0; i < kyuukonPerTulip; i++)
+            // 増やす数
+            int baseKyuukonCount = kyuukonPerTulip / 10;
+            int amari = kyuukonPerTulip % 10;
+            int initKyuukonCount = baseKyuukonCount;
+            if (getTulipCount % 10 < amari)
             {
-                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage.root);
+                initKyuukonCount += 1;
+            }
+            for (int i = 0; i < initKyuukonCount; i++)
+            {
+                var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
                 kyuukonRect.position = centerPos;
                 var seq = DOTween.Sequence();
-                seq.Append(kyuukonRect.DOMove(RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip), 0.25f).SetEase(Ease.OutCubic))
+                seq.Append(kyuukonRect.DOMove(RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / initKyuukonCount) * Vector3.right * 0.15f * initKyuukonCount), 0.25f).SetEase(Ease.OutCubic))
                    .AppendInterval(i * 0.2f)
                    .Append(kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack))
                    .OnComplete(() =>
@@ -423,7 +439,7 @@ public class GameManager : MonoBehaviour
             kyuukonCount -= kPerPrice;
             kPerPrice = Mathf.FloorToInt(kPerPrice * kPerMag);
             kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
-            kyuukonPerTulip += 1;
+            kyuukonPerTulip += 5;
             audioSource.PlayOneShot(buySe);
         }
     }
