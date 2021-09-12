@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Soujiki : MonoBehaviour
 {
-    public static float speed = 1f;
+    public const float INIT_SPEED = 1f;
+    public static float speed = INIT_SPEED;
     public static float speedMag = 1.5f;
     [SerializeField]
     float interval;

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool loadSaveData = true;
     [SerializeField]
-    private float saveIntervalSec = 10.0f;
+    private const float SAVE_INTERVAL_SEC = 10.0f;
     private TadaLib.Timer saveTimer;
 
     // 音
@@ -21,10 +21,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     AudioClip buySe;
     public static GameManager instance;
-    public static float landBaseWidth = 1.25f;
-    public static float landBaseHeight = 1f;
-    public static float landWidth = 2.5f;
-    public static float landHeight = 2f;
+
+    private const float LAND_BASE_WIDTH = 1.25f;
+    private const float LAND_BASE_HEIGHT = 1f;
+    public const float INIT_LAND_WIDTH = 2.5f;
+    public const float INIT_LAND_HEIGHT = 2f;
+    public static float landWidth = INIT_LAND_WIDTH;
+    public static float landHeight = INIT_LAND_HEIGHT;
 
     [SerializeField]
     Tulip tulipPrefab;
@@ -40,7 +43,9 @@ public class GameManager : MonoBehaviour
     int plantTulipCount = 0;
     int getTulipCount = 0;
     public int kyuukonCount = 0;
-    public static int totalKyuukonCount { get; private set; } = 0;
+
+    private const int INIT_TOTAL_KYUUKON_COUNT = 0;
+    public static int totalKyuukonCount { get; private set; } = INIT_TOTAL_KYUUKON_COUNT;
     public static float KyuukonPerTime => instance.CounterPerTime.GetCount(totalKyuukonCount);
 
     int kyuukonPerTulip = 4;
@@ -48,19 +53,19 @@ public class GameManager : MonoBehaviour
     public List<Soujiki> soujikiList = new List<Soujiki>();
     public List<Drone> droneList = new List<Drone>();
     int landPrice = 5;
-    float landMag = 1.5f;
+    private const float LAND_MAG = 1.5f;
     int soujikiPrice = 10;
-    float soujikiMag = 1.5f;
+    private const float SOUJIKI_MAG = 1.5f;
     int dronePrice = 20;
-    float droneMag = 1.5f;
+    private const float DRONE_MAG = 1.5f;
     int sSpeedPrice = 30;
-    float sSpeedMag = 1.5f;
+    private const float SOUJIKI_SPEED_MAG = 1.5f;
     int dSpeedPrice = 40;
-    float dSpeedMag = 1.5f;
+    private const float DRONE_SPEED_MAG = 1.5f;
     int tSpeedPrice = 50;
-    float tSpeedMag = 1.5f;
+    private const float TULIP_SPEED_MAG = 1.5f;
     int kPerPrice = 100;
-    float kPerMag = 1.5f;
+    private const float KYUUKON_PER_COUNT = 1.5f;
     bool landKnown;
     bool soujikiKnown;
     bool droneKnown;
@@ -133,7 +138,7 @@ public class GameManager : MonoBehaviour
         {
             TryLoad();
         }
-        saveTimer = new TadaLib.Timer(saveIntervalSec);
+        saveTimer = new TadaLib.Timer(SAVE_INTERVAL_SEC);
         CounterPerTime = new KyuukonCountPerTime(10, 0.1f);
     }
 
@@ -360,10 +365,10 @@ public class GameManager : MonoBehaviour
             kyuukonCount -= landPrice;
             Camera.main.orthographicSize += 1;
             walls.localScale = Vector3.one * Camera.main.orthographicSize;
-            landPrice = Mathf.FloorToInt(landPrice * landMag);
+            landPrice = Mathf.FloorToInt(landPrice * LAND_MAG);
             landText.text = $"土地({landPrice}T)";
-            landWidth = landBaseWidth * Camera.main.orthographicSize;
-            landHeight = landBaseHeight * Camera.main.orthographicSize;
+            landWidth = LAND_BASE_WIDTH * Camera.main.orthographicSize;
+            landHeight = LAND_BASE_HEIGHT * Camera.main.orthographicSize;
             audioSource.PlayOneShot(buySe);
         }
     }
@@ -376,7 +381,7 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > soujikiPrice)
         {
             kyuukonCount -= soujikiPrice;
-            soujikiPrice = Mathf.FloorToInt(soujikiPrice * soujikiMag);
+            soujikiPrice = Mathf.FloorToInt(soujikiPrice * SOUJIKI_MAG);
             soujikiText.text = $"自動収穫機({soujikiPrice}T)";
             var soujiki = Instantiate(soujikiPrefab);
             soujikiList.Add(soujiki);
@@ -389,7 +394,7 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > dronePrice)
         {
             kyuukonCount -= dronePrice;
-            dronePrice = Mathf.FloorToInt(dronePrice * droneMag);
+            dronePrice = Mathf.FloorToInt(dronePrice * DRONE_MAG);
             droneText.text = $"自動種まき機({dronePrice}T)";
             var drone = Instantiate(dronePrefab);
             droneList.Add(drone);
@@ -408,7 +413,7 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > sSpeedPrice)
         {
             kyuukonCount -= sSpeedPrice;
-            sSpeedPrice = Mathf.FloorToInt(sSpeedPrice * sSpeedMag);
+            sSpeedPrice = Mathf.FloorToInt(sSpeedPrice * SOUJIKI_SPEED_MAG);
             sSpeedText.text = $"収穫機スピードアップ({sSpeedPrice}T)";
             Soujiki.speed *= Soujiki.speedMag;
             audioSource.PlayOneShot(buySe);
@@ -420,10 +425,10 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > dSpeedPrice)
         {
             kyuukonCount -= dSpeedPrice;
-            dSpeedPrice = Mathf.FloorToInt(dSpeedPrice * dSpeedMag);
+            dSpeedPrice = Mathf.FloorToInt(dSpeedPrice * DRONE_SPEED_MAG);
             dSpeedText.text = $"種まき機スピードアップ({dSpeedPrice}T)";
-            Drone.speed *= Drone.speedMag;
-            Drone.interval /= Drone.speedMag;
+            Drone.speed *= Drone.SPEED_MAG;
+            Drone.interval /= Drone.SPEED_MAG;
             audioSource.PlayOneShot(buySe);
         }
     }
@@ -433,9 +438,9 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > tSpeedPrice)
         {
             kyuukonCount -= tSpeedPrice;
-            tSpeedPrice = Mathf.FloorToInt(tSpeedPrice * tSpeedMag);
+            tSpeedPrice = Mathf.FloorToInt(tSpeedPrice * TULIP_SPEED_MAG);
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
-            Tulip.tulipTime /= Tulip.tulipTimeMag;
+            Tulip.tulipTime /= Tulip.TULIP_TIME_MAG;
             audioSource.PlayOneShot(buySe);
         }
     }
@@ -445,7 +450,7 @@ public class GameManager : MonoBehaviour
         if (kyuukonCount > kPerPrice)
         {
             kyuukonCount -= kPerPrice;
-            kPerPrice = Mathf.FloorToInt(kPerPrice * kPerMag);
+            kPerPrice = Mathf.FloorToInt(kPerPrice * KYUUKON_PER_COUNT);
             kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
             kyuukonPerTulip += 1;
             audioSource.PlayOneShot(buySe);
@@ -536,8 +541,8 @@ public class GameManager : MonoBehaviour
             totalKyuukonCount = data.TotalKyuukonCount;
             Camera.main.orthographicSize = data.LandScale;
             walls.localScale = Vector3.one * data.LandScale;
-            landWidth = landBaseWidth * Camera.main.orthographicSize;
-            landHeight = landBaseHeight * Camera.main.orthographicSize;
+            landWidth = LAND_BASE_WIDTH * Camera.main.orthographicSize;
+            landHeight = LAND_BASE_HEIGHT * Camera.main.orthographicSize;
             landPrice = data.LandPrice;
             for (int idx = 0; idx < data.SoujikiCount; ++idx)
             {
@@ -565,5 +570,18 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    void InitializeGameManager()
+    {
+        // GameManager分
+        totalKyuukonCount = INIT_TOTAL_KYUUKON_COUNT;
+
+        landWidth = INIT_LAND_WIDTH;
+        landHeight = INIT_LAND_HEIGHT;
+
+        Soujiki.speed = Soujiki.INIT_SPEED;
+        Drone.speed = Drone.INIT_SPEED;
+        Tulip.tulipTime = Tulip.INIT_TULIP_TIME;
     }
 }

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
-    public static float speed = 1f;
-    public static float interval = 2f;
-    public static float speedMag = 1.5f;
+    public const float INIT_SPEED = 1f;
+    public static float speed = INIT_SPEED;
+
+    public const float INIT_INTERVAL = 2f;
+    public static float interval = INIT_INTERVAL;
+    public const float SPEED_MAG = 1.5f;
     Vector3 dir = Vector3.right;
     float loopTime = 0;
     bool loopFlag = false;

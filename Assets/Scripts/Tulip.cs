@@ -18,8 +18,9 @@ public class Tulip : MonoBehaviour
     //AnimatorStateTransition ast;
     
     float lifeTime = 0;
-    public static float tulipTime = 5f;
-    public static float tulipTimeMag = 1.5f;
+    public const float INIT_TULIP_TIME = 5f;
+    public static float tulipTime = INIT_TULIP_TIME;
+    public const float TULIP_TIME_MAG = 1.5f;
     public int id;
 
     // Start is called before the first frame update
