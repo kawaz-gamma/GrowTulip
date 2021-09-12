@@ -22,7 +22,8 @@ public class Drone : MonoBehaviour
     void Update()
     {
         loopTime += Time.deltaTime;
-        if (loopTime >= interval)
+        //interval”pŽ~
+        if (loopTime >= 2f / speed)
         {
             if (GameManager.instance.PlantKyuukon(transform.position))
             {
