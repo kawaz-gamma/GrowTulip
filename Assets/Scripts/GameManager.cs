@@ -108,6 +108,9 @@ public class GameManager : MonoBehaviour
     UpgradeButton[] upgrades;
 
     [SerializeField]
+    Animator kyuuKonIconAnim;
+
+    [SerializeField]
     RectTransform optionPanel;
 
     [SerializeField]
@@ -321,7 +324,7 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < initKyuukonCount; i++)
             {
-                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage);
+                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage.parent);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
                 kyuukonRect.position = centerPos;
                 var seq = DOTween.Sequence();

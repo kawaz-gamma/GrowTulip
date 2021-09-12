@@ -1844,6 +1844,30 @@ RectTransform:
   m_AnchoredPosition: {x: 290, y: 220.24}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &352374328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4252236037423769578, guid: 85a2334c508637348bd12d03dcf20f83, type: 3}
+  m_PrefabInstance: {fileID: 4252236038321029932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &352374331
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352374328}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71b2b185de4472041bf1d1ae14fcc537, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &372567136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5528,6 +5552,7 @@ MonoBehaviour:
   tSpeedButton: {fileID: 454198506}
   kPerButton: {fileID: 241962158}
   upgrades: []
+  kyuuKonIconAnim: {fileID: 352374331}
   optionPanel: {fileID: 1879646793}
   userName: {fileID: 1853826269}
   kyuukonIconPool: {fileID: 838794776}
