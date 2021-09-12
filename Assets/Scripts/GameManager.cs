@@ -133,6 +133,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private KyuukonIconPool kyuukonIconPool;
 
+    private float startTime = 0.0f;
+
+    [SerializeField]
+    private UnityEngine.UI.Toggle toggle;
+
     void Awake()
     {
         instance = this;
@@ -305,7 +310,7 @@ public class GameManager : MonoBehaviour
         // テキスト更新
         kyuukonCountText.text = $"{kyuukonCount}";
         kyuukonPerTimeText.text = $"{CounterPerTime.GetCount(totalKyuukonCount):F1}T/s";
-        timeText.text = $"{(int)Time.timeSinceLevelLoad}s";
+        timeText.text = $"{(int)(Time.timeSinceLevelLoad + startTime)}s";
 
         // 音量調整
         audioSource.volume = 4 / Camera.main.orthographicSize;
@@ -316,7 +321,7 @@ public class GameManager : MonoBehaviour
         KoitanDebug.Display($"時間あたり球根獲得数 = {CounterPerTime.GetCount(totalKyuukonCount):F1}\n");
         //KoitanDebug.Display($"植えたチューリップの本数 = {plantTulipCount}\n");
         //KoitanDebug.Display($"収穫したチューリップの本数 = {getTulipCount}\n");
-        KoitanDebug.Display($"タイム : {(int)Time.time}s\n");
+        //KoitanDebug.Display($"タイム : {(int)(Time.time + startTime)}s\n");
     }
 
     public void GetTulip(Tulip tulip)
@@ -553,6 +558,8 @@ public class GameManager : MonoBehaviour
         data.KyuukonPerTulip = kyuukonPerTulip;
         data.KyuukonPerPrice = kPerPrice;
         data.UserName = userName.Name;
+        data.ElapsedTime = Time.time + startTime;
+        data.IsKyuukonUi = (isKyuukonUi) ? 1 : 0;
 
         data.Save();
     }
@@ -592,6 +599,9 @@ public class GameManager : MonoBehaviour
             kyuukonPerTulip = data.KyuukonPerTulip;
             kPerPrice = data.KyuukonPerPrice;
             userName.SetUserName(data.UserName);
+            startTime = data.ElapsedTime;
+            toggle.isOn = data.IsKyuukonUi == 1;
+            isKyuukonUi = data.IsKyuukonUi == 1;
 
             return true;
         }
@@ -610,5 +620,6 @@ public class GameManager : MonoBehaviour
         Soujiki.speed = Soujiki.INIT_SPEED;
         Drone.speed = Drone.INIT_SPEED;
         Tulip.tulipTime = Tulip.INIT_TULIP_TIME;
+        startTime = 0.0f;
     }
 }

@@ -6004,6 +6004,7 @@ MonoBehaviour:
   optionPanel: {fileID: 1879646793}
   userName: {fileID: 1853826269}
   kyuukonIconPool: {fileID: 838794776}
+  toggle: {fileID: 1602124156}
 --- !u!4 &1444128186
 Transform:
   m_ObjectHideFlags: 0

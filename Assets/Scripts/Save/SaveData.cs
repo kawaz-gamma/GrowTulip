@@ -41,6 +41,10 @@ namespace Save
         public int KyuukonPerPrice;
         // ランキングに登録されるユーザー名
         public string UserName;
+        // 経過時間
+        public float ElapsedTime;
+        // 球根獲得演出の有無
+        public int IsKyuukonUi;
 
         public static SaveData CreateZeroValue()
         {
@@ -62,7 +66,9 @@ namespace Save
                 TulipSpeedPrice = 0,
                 KyuukonPerTulip = 0,
                 KyuukonPerPrice = 0,
-                UserName = "Guest"
+                UserName = "Guest",
+                ElapsedTime = 0.0f,
+                IsKyuukonUi = 1
             };
         }
 
@@ -94,7 +100,9 @@ namespace Save
                 TulipSpeedPrice = PlayerPrefs.GetInt(nameof(TulipSpeedPrice)),
                 KyuukonPerTulip = PlayerPrefs.GetInt(nameof(KyuukonPerTulip)),
                 KyuukonPerPrice = PlayerPrefs.GetInt(nameof(KyuukonPerPrice)),
-                UserName = PlayerPrefs.GetString(nameof(UserName))
+                UserName = PlayerPrefs.GetString(nameof(UserName)),
+                ElapsedTime = PlayerPrefs.GetFloat(nameof(ElapsedTime)),
+                IsKyuukonUi = PlayerPrefs.GetInt(nameof(IsKyuukonUi))
             };
         }
 
@@ -117,6 +125,8 @@ namespace Save
             if (!PlayerPrefs.HasKey(nameof(KyuukonPerTulip))) return false;
             if (!PlayerPrefs.HasKey(nameof(KyuukonPerPrice))) return false;
             if (!PlayerPrefs.HasKey(nameof(UserName))) return false;
+            if (!PlayerPrefs.HasKey(nameof(ElapsedTime))) return false;
+            if (!PlayerPrefs.HasKey(nameof(IsKyuukonUi))) return false;
 
             return true;
         }
@@ -140,6 +150,8 @@ namespace Save
             PlayerPrefs.DeleteKey(nameof(KyuukonPerTulip));
             PlayerPrefs.DeleteKey(nameof(KyuukonPerPrice));
             PlayerPrefs.DeleteKey(nameof(UserName));
+            PlayerPrefs.DeleteKey(nameof(ElapsedTime));
+            PlayerPrefs.DeleteKey(nameof(IsKyuukonUi));
         }
 
         public void Save()
@@ -161,6 +173,8 @@ namespace Save
             Save(KyuukonPerTulip, nameof(KyuukonPerTulip));
             Save(KyuukonPerPrice, nameof(KyuukonPerPrice));
             Save(UserName, nameof(UserName));
+            Save(ElapsedTime, nameof(ElapsedTime));
+            Save(IsKyuukonUi, nameof(IsKyuukonUi));
         }
 
         private void Save(int value, string key)
