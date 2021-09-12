@@ -61,6 +61,14 @@ public class GameManager : MonoBehaviour
     float tSpeedMag = 1.5f;
     int kPerPrice = 100;
     float kPerMag = 1.5f;
+    bool landKnown;
+    bool soujikiKnown;
+    bool droneKnown;
+    bool sSpeedKnown;
+    bool dSpeedKnown;
+    bool tSpeedKnown;
+    bool kSpeedKnown;
+    bool kPerKnown;
     [SerializeField]
     Transform walls;
     [SerializeField]
@@ -170,46 +178,88 @@ public class GameManager : MonoBehaviour
         }
 
         // ボタン表示
-        if (!landButton.gameObject.activeSelf && kyuukonCount > landPrice)
+        // 土地
+        if (!landButton.gameObject.activeSelf)
         {
             landButton.gameObject.SetActive(true);
+            landText.text = $"???({landPrice}T)";
+        }
+        if (!landKnown && kyuukonCount > landPrice)
+        {
             landText.text = $"土地({landPrice}T)";
+            landKnown = true;
         }
         landButton.interactable = kyuukonCount > landPrice;
-        if (!soujikiButton.gameObject.activeSelf && kyuukonCount > soujikiPrice)
+        // 自動収穫機
+        if (landKnown && !soujikiButton.gameObject.activeSelf)
         {
             soujikiButton.gameObject.SetActive(true);
+            soujikiText.text = $"???({soujikiPrice}T)";
+        }
+        if (!soujikiKnown && kyuukonCount > soujikiPrice)
+        {
             soujikiText.text = $"自動収穫機({soujikiPrice}T)";
+            soujikiKnown = true;
         }
         soujikiButton.interactable = kyuukonCount > soujikiPrice;
-        if (!droneButton.gameObject.activeSelf && kyuukonCount > dronePrice)
+        //自動種まき機
+        if (soujikiKnown && !droneButton.gameObject.activeSelf)
         {
             droneButton.gameObject.SetActive(true);
+            droneText.text = $"???({dronePrice}T)";
+        }
+        if (!droneKnown && kyuukonCount > dronePrice)
+        {
             droneText.text = $"自動種まき機({dronePrice}T)";
+            droneKnown = true;
         }
         droneButton.interactable = kyuukonCount > dronePrice;
-        if (!sSpeedButton.gameObject.activeSelf && kyuukonCount > sSpeedPrice)
+        //収穫機スピード
+        if (droneKnown && !sSpeedButton.gameObject.activeSelf)
         {
             sSpeedButton.gameObject.SetActive(true);
-            sSpeedText.text = $"収穫機スピードアップ({sSpeedPrice}T)";
+            sSpeedText.text = $"???({sSpeedPrice}T)";
+        }
+        if (!sSpeedKnown && kyuukonCount > sSpeedPrice)
+        {
+            sSpeedText.text = $"自動収穫機スピードアップ({sSpeedPrice}T)";
+            sSpeedKnown = true;
         }
         sSpeedButton.interactable = kyuukonCount > sSpeedPrice;
-        if (!dSpeedButton.gameObject.activeSelf && kyuukonCount > dSpeedPrice)
+        //種まき機スピード
+        if (sSpeedKnown && !dSpeedButton.gameObject.activeSelf)
         {
             dSpeedButton.gameObject.SetActive(true);
-            dSpeedText.text = $"種まき機スピードアップ({dSpeedPrice}T)";
+            dSpeedText.text = $"???({dSpeedPrice}T)";
+        }
+        if (!dSpeedKnown && kyuukonCount > dSpeedPrice)
+        {
+            dSpeedText.text = $"自動種まき機スピードアップ({dSpeedPrice}T)";
+            dSpeedKnown = true;
         }
         dSpeedButton.interactable = kyuukonCount > dSpeedPrice;
-        if (!tSpeedButton.gameObject.activeSelf && kyuukonCount > tSpeedPrice)
+        //チューリップ
+        if (dSpeedKnown && !tSpeedButton.gameObject.activeSelf)
         {
             tSpeedButton.gameObject.SetActive(true);
+            tSpeedText.text = $"???({tSpeedPrice}T)";
+        }
+        if (!tSpeedKnown && kyuukonCount > tSpeedPrice)
+        {
             tSpeedText.text = $"チューリップスピードアップ({tSpeedPrice}T)";
+            tSpeedKnown = true;
         }
         tSpeedButton.interactable = kyuukonCount > tSpeedPrice;
-        if (!kPerButton.gameObject.activeSelf && kyuukonCount > kPerPrice)
+        //球根獲得数
+        if (tSpeedKnown && !kPerButton.gameObject.activeSelf)
         {
             kPerButton.gameObject.SetActive(true);
+            kPerText.text = $"???({kPerPrice}T)";
+        }
+        if (!kPerKnown && kyuukonCount > kPerPrice)
+        {
             kPerText.text = $"球根獲得数アップ({kPerPrice}T)";
+            kPerKnown = true;
         }
         kPerButton.interactable = kyuukonCount > kPerPrice;
 
@@ -234,23 +284,41 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(getSe);
             // 取得した球根の表示
             Vector3 targetPos = kyuukonImage.position;
+            Vector3 centerPos = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position);
             // ランダムな方向
             float randamDeg = Random.Range(0f, 360f);
             for (int i = 0; i < kyuukonPerTulip; i++)
             {
                 var kyuukonRect = Instantiate(kyuukonIcon, kyuukonImage.root);
-                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
+                kyuukonRect.position = centerPos;
+                var seq = DOTween.Sequence();
+                seq.Append(kyuukonRect.DOMove(RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip), 0.25f).SetEase(Ease.OutCubic))
+                   .AppendInterval(i * 0.2f)
+                   .Append(kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack))
+                   .OnComplete(() =>
+                   {
+                       Destroy(kyuukonRect.gameObject);
+                       kyuukonCount++;
+                       totalKyuukonCount++;
+                       /*
+                       kyuukonImage.localScale = Vector3.one;
+                       kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
+                       */
+                   });
+                /*
+                kyuukonRect.position = RectTransformUtility.WorldToScreenPoint(Camera.main, tulip.transform.position + Quaternion.Euler(0, 0, randamDeg + i * 360 / kyuukonPerTulip) * Vector3.right * 0.15f * kyuukonPerTulip);
                 kyuukonRect.DOMove(targetPos, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
-                {
-                    Destroy(kyuukonRect.gameObject);
-                    kyuukonCount++;
-                    totalKyuukonCount++;
-                    /*
-                    kyuukonImage.localScale = Vector3.one;
-                    kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
-                    */
-                });
+                  {
+                      Destroy(kyuukonRect.gameObject);
+                      kyuukonCount++;
+                      totalKyuukonCount++;
+                      *//*
+                      kyuukonImage.localScale = Vector3.one;
+                      kyuukonImage.DOPunchScale(Vector3.one * 0.1f, 0.1f);
+                      *//*
+                  });*/
+
             }
         }
     }
