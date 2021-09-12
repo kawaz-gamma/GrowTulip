@@ -300,10 +300,15 @@ public class GameManager : MonoBehaviour
         }
         kPerButton.interactable = kyuukonCount > kPerPrice;
 
+        // テキスト更新
         kyuukonCountText.text = $"{kyuukonCount}";
         kyuukonPerTimeText.text = $"{CounterPerTime.GetCount(totalKyuukonCount):F1}T/s";
         timeText.text = $"{(int)Time.timeSinceLevelLoad}s";
 
+        // 音量調整
+        audioSource.volume = 4 / Camera.main.orthographicSize;
+
+        // デバッグ表示
         KoitanDebug.Display($"球根の所持数 = {kyuukonCount}\n");
         KoitanDebug.Display($"球根総獲得数 = {totalKyuukonCount}\n");
         KoitanDebug.Display($"時間あたり球根獲得数 = {CounterPerTime.GetCount(totalKyuukonCount):F1}\n");
