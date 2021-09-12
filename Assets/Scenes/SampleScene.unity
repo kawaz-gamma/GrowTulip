@@ -5680,6 +5680,7 @@ MonoBehaviour:
   loadSaveData: 1
   getSe: {fileID: 8300000, guid: f927eb1d529bfbc4e8199d20ca3a2b59, type: 3}
   buySe: {fileID: 8300000, guid: 567d1ec4e1ff32947bc20e69de6dadab, type: 3}
+  plantSe: {fileID: 8300000, guid: 477753724c93a774a8ff35d15a11ec38, type: 3}
   tulipPrefab: {fileID: 6090787846094601671, guid: 36465eb6ae34ed6498b39356e6533968, type: 3}
   soujikiPrefab: {fileID: 1750414266801326366, guid: a5d89d4a52e8ee845a02d6055505cb18, type: 3}
   dronePrefab: {fileID: 3675413525597673146, guid: 75c2dfbee4daf1c4aa88f8f61d262066, type: 3}

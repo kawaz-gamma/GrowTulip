@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     AudioClip getSe;
     [SerializeField]
     AudioClip buySe;
+    [SerializeField]
+    AudioClip plantSe;
     public static GameManager instance;
 
     private const float LAND_BASE_WIDTH = 1.25f;
@@ -504,6 +506,8 @@ public class GameManager : MonoBehaviour
         if (EnablePlant(pos))
         {
             ForcePlantKyuukon(pos);
+            // ‰¹
+            audioSource.PlayOneShot(plantSe);
             return true;
         }
         return false;
