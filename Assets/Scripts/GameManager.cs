@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     AudioClip buySe;
     [SerializeField]
     AudioClip plantSe;
+    [SerializeField]
+    AudioClip tulipSe;
     public static GameManager instance;
 
     private const float LAND_BASE_WIDTH = 1.25f;
@@ -519,6 +521,12 @@ public class GameManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    //チューリップが咲いたときの音
+    public void PlayTulipSe()
+    {
+        audioSource.PlayOneShot(tulipSe);
     }
 
     void Save()

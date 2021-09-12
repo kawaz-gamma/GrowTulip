@@ -15,7 +15,7 @@ public class Tulip : MonoBehaviour
     Collider2D collider;
     [SerializeField]
     Animator animator;
-    
+
     float lifeTime = 0;
     public const float INIT_TULIP_TIME = 5f;
     public static float tulipTime = INIT_TULIP_TIME;
@@ -35,7 +35,7 @@ public class Tulip : MonoBehaviour
 
         // 花の色を変更
         tulipFlowerSprite.GetComponent<SpriteRenderer>().material.SetFloat("_Hue", Random.Range(0, 360));
-        
+
     }
 
     // Update is called once per frame
@@ -55,6 +55,7 @@ public class Tulip : MonoBehaviour
                     tulipFlowerObject.SetActive(true);
                     // チューリップリストに追加
                     GameManager.instance.tulipList.Add(this);
+                    GameManager.instance.PlayTulipSe();
                 }
                 break;
         }
