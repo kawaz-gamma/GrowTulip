@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
         }
         if (!sSpeedKnown && kyuukonCount > sSpeedPrice)
         {
-            sSpeedText.text = $"自動収穫機スピードアップ({sSpeedPrice}T)";
+            sSpeedText.text = $"収穫機スピードアップ({sSpeedPrice}T)";
             sSpeedKnown = true;
         }
         sSpeedButton.interactable = kyuukonCount > sSpeedPrice;
@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour
         }
         if (!dSpeedKnown && kyuukonCount > dSpeedPrice)
         {
-            dSpeedText.text = $"自動種まき機スピードアップ({dSpeedPrice}T)";
+            dSpeedText.text = $"種まき機スピードアップ({dSpeedPrice}T)";
             dSpeedKnown = true;
         }
         dSpeedButton.interactable = kyuukonCount > dSpeedPrice;
