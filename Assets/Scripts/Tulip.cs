@@ -13,9 +13,8 @@ public class Tulip : MonoBehaviour
     GameObject tulipFlowerSprite;
     [SerializeField]
     Collider2D collider;
+    [SerializeField]
     Animator animator;
-    //[SerializeField]
-    //AnimatorStateTransition ast;
     
     float lifeTime = 0;
     public const float INIT_TULIP_TIME = 5f;
@@ -30,13 +29,13 @@ public class Tulip : MonoBehaviour
         //collider.enabled = false;
         kyuukonSprite.SetActive(true);
 
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
 
         tulipFlowerObject.SetActive(false);
 
         // 花の色を変更
         tulipFlowerSprite.GetComponent<SpriteRenderer>().material.SetFloat("_Hue", Random.Range(0, 360));
-
+        
     }
 
     // Update is called once per frame
@@ -46,8 +45,7 @@ public class Tulip : MonoBehaviour
         {
             case TulipState.Kyuukon:
                 lifeTime += Time.deltaTime;
-                //animator.SetFloat("TimeLeft", 1 - (tulipTime - lifeTime));
-                //animator.GetAnimatorTransitionInfo
+                animator.SetFloat("TimeLeft", tulipTime - lifeTime);
 
                 if (lifeTime > tulipTime)
                 {
