@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     RectTransform optionPanel;
 
+    [SerializeField]
+    private Ranking.UserName userName;
+
     public KyuukonCountPerTime CounterPerTime { private set; get; }
 
     void Awake()
@@ -491,6 +494,9 @@ public class GameManager : MonoBehaviour
         data.DroneSpeedPrice = dSpeedPrice;
         data.TulipSpeed = Tulip.tulipTime;
         data.TulipSpeedPrice = tSpeedPrice;
+        data.KyuukonPerTulip = kyuukonPerTulip;
+        data.KyuukonPerPrice = kPerPrice;
+        data.UserName = userName.Name;
 
         data.Save();
     }
@@ -527,6 +533,9 @@ public class GameManager : MonoBehaviour
             dSpeedPrice = data.DroneSpeedPrice;
             Tulip.tulipTime = data.TulipSpeed;
             tSpeedPrice = data.TulipSpeedPrice;
+            kyuukonPerTulip = data.KyuukonPerTulip;
+            kPerPrice = data.KyuukonPerPrice;
+            userName.SetUserName(data.UserName);
 
             return true;
         }

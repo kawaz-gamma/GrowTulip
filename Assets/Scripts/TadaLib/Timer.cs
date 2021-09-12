@@ -39,5 +39,15 @@ namespace TadaLib
         {
             return Time.time - startTimeSec_;
         }
+
+        public void ToEnd()
+        {
+            startTimeSec_ = Time.time - limitTimeSec_ - 0.01f;
+        }
+
+        public void ToNearEnd()
+        {
+            startTimeSec_ = Time.time - limitTimeSec_ * 0.9f;
+        }
     }
 }

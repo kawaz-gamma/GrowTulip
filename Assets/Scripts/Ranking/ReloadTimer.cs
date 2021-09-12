@@ -43,5 +43,15 @@ namespace Ranking
         {
             timer_ = new TadaLib.Timer(intervalSec_);
         }
+
+        public void ToEnd()
+        {
+            timer_.ToEnd();
+        }
+
+        public void ToNearEnd()
+        {
+            timer_.ToNearEnd();
+        }
     }
 }

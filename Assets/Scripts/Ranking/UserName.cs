@@ -23,5 +23,10 @@ namespace Ranking
                 Name = "Guest";
             }
         }
+
+        public void SetUserName(string userName)
+        {
+            inputField.text = userName;
+        }
     }
 }

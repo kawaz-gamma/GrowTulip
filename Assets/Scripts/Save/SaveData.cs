@@ -35,6 +35,12 @@ namespace Save
         public float TulipSpeed;
         // チューリップのスピードアップ価格
         public int TulipSpeedPrice;
+        // チューリップからとれる球根数
+        public int KyuukonPerTulip;
+        // チューリップからとれる球根数アップの価格
+        public int KyuukonPerPrice;
+        // ランキングに登録されるユーザー名
+        public string UserName;
 
         public static SaveData CreateZeroValue()
         {
@@ -53,7 +59,10 @@ namespace Save
                 DroneSpeed = 0.0f,
                 DroneSpeedPrice = 0,
                 TulipSpeed = 0.0f,
-                TulipSpeedPrice = 0
+                TulipSpeedPrice = 0,
+                KyuukonPerTulip = 0,
+                KyuukonPerPrice = 0,
+                UserName = "Guest"
             };
         }
 
@@ -82,7 +91,10 @@ namespace Save
                 DroneSpeed = PlayerPrefs.GetFloat(nameof(DroneSpeed)),
                 DroneSpeedPrice = PlayerPrefs.GetInt(nameof(DroneSpeedPrice)),
                 TulipSpeed = PlayerPrefs.GetFloat(nameof(TulipSpeed)),
-                TulipSpeedPrice = PlayerPrefs.GetInt(nameof(TulipSpeedPrice))
+                TulipSpeedPrice = PlayerPrefs.GetInt(nameof(TulipSpeedPrice)),
+                KyuukonPerTulip = PlayerPrefs.GetInt(nameof(KyuukonPerTulip)),
+                KyuukonPerPrice = PlayerPrefs.GetInt(nameof(KyuukonPerPrice)),
+                UserName = PlayerPrefs.GetString(nameof(UserName))
             };
         }
 
@@ -102,6 +114,9 @@ namespace Save
             if (!PlayerPrefs.HasKey(nameof(DroneSpeedPrice))) return false;
             if (!PlayerPrefs.HasKey(nameof(TulipSpeed))) return false;
             if (!PlayerPrefs.HasKey(nameof(TulipSpeedPrice))) return false;
+            if (!PlayerPrefs.HasKey(nameof(KyuukonPerTulip))) return false;
+            if (!PlayerPrefs.HasKey(nameof(KyuukonPerPrice))) return false;
+            if (!PlayerPrefs.HasKey(nameof(UserName))) return false;
 
             return true;
         }
@@ -127,6 +142,9 @@ namespace Save
             Save(DroneSpeedPrice, nameof(DroneSpeedPrice));
             Save(TulipSpeed, nameof(TulipSpeed));
             Save(TulipSpeedPrice, nameof(TulipSpeedPrice));
+            Save(KyuukonPerTulip, nameof(KyuukonPerTulip));
+            Save(KyuukonPerPrice, nameof(KyuukonPerPrice));
+            Save(UserName, nameof(UserName));
         }
 
         private void Save(int value, string key)
@@ -136,6 +154,10 @@ namespace Save
         private void Save(float value, string key)
         {
             PlayerPrefs.SetFloat(key, value);
+        }
+        private void Save(string value, string key)
+        {
+            PlayerPrefs.SetString(key, value);
         }
     }
 }
