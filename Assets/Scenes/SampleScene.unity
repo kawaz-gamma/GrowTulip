@@ -5932,7 +5932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a428a00a902e112459849d0531931a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSaveData: 0
+  loadSaveData: 1
   saveIntervalSec: 10
   getSe: {fileID: 8300000, guid: f927eb1d529bfbc4e8199d20ca3a2b59, type: 3}
   buySe: {fileID: 8300000, guid: 567d1ec4e1ff32947bc20e69de6dadab, type: 3}
@@ -5961,6 +5961,7 @@ MonoBehaviour:
   tSpeedButton: {fileID: 454198506}
   kPerButton: {fileID: 241962158}
   optionPanel: {fileID: 1879646793}
+  userName: {fileID: 1853826269}
 --- !u!4 &1444128186
 Transform:
   m_ObjectHideFlags: 0

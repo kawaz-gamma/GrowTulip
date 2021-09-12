@@ -72,7 +72,7 @@ namespace Ranking
         void Start()
         {
             reloadTimer = new ReloadTimer(reloadIntervalSec, reloadAccelIntervalSec, reloadMaxIntervalSec);
-            StartCoroutine(ReloadRanking());
+            reloadTimer.ToNearEnd();
         }
 
         // Update is called once per frame
