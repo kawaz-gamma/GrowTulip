@@ -13,10 +13,17 @@ public class MonoColorChanger : MonoBehaviour
 
     public void ToBlackColor()
     {
-        image.color = Color.black;
+        if (image != null)
+        {
+            image.color = Color.black;
+        }
     }
+
     public void ToWhiteColor()
     {
-        image.color = Color.white;
+        if (image != null)
+        {
+            image.color = Color.white;
+        }
     }
 }

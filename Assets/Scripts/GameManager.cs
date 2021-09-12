@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     int getTulipCount = 0;
     public int kyuukonCount = 0;
 
-    private const int INIT_TOTAL_KYUUKON_COUNT = 0;
+    private const int INIT_TOTAL_KYUUKON_COUNT = 1;
     public static int totalKyuukonCount { get; private set; } = INIT_TOTAL_KYUUKON_COUNT;
     public static float KyuukonPerTime => instance.CounterPerTime.GetCount(totalKyuukonCount);
 
@@ -572,7 +572,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    void InitializeGameManager()
+    public void InitializeGameManager()
     {
         // GameManager•ª
         totalKyuukonCount = INIT_TOTAL_KYUUKON_COUNT;

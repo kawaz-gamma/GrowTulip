@@ -121,7 +121,7 @@ namespace Save
             return true;
         }
 
-        public void DeleteSaveData()
+        public static void DeleteSaveData()
         {
             PlayerPrefs.DeleteAll();
         }
