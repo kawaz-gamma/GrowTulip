@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < initKyuukonCount; i++)
             {
-                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage.parent);
+                var kyuukonRect = kyuukonIconPool.InstantiateObject(kyuukonImage);
                 kyuukonRect.localScale = Vector3.one * 2 / Camera.main.orthographicSize;
                 kyuukonRect.position = centerPos;
                 var seq = DOTween.Sequence();
