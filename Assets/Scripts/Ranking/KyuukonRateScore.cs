@@ -13,7 +13,7 @@ namespace Ranking
 
         private void Update()
         {
-            Score = (int)GameManager.KyuukonPerTime;
+            Score = (int)(GameManager.KyuukonPerTime * 100.0f);
         }
     }
 }

@@ -13,6 +13,10 @@ namespace Ranking
 
         private void Update()
         {
+            if(inputField.text.Length > 6)
+            {
+                inputField.text = inputField.text.Substring(0, 6);
+            }
             Name = inputField.text;
             if(Name == "")
             {
