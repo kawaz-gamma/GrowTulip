@@ -377,6 +377,8 @@ public class GameManager : MonoBehaviour
             totalKyuukonCount = data.TotalKyuukonCount;
             Camera.main.orthographicSize = data.LandScale;
             walls.localScale = Vector3.one * data.LandScale;
+            landWidth = landBaseWidth * Camera.main.orthographicSize;
+            landHeight = landBaseHeight * Camera.main.orthographicSize;
             landPrice = data.LandPrice;
             for (int idx = 0; idx < data.SoujikiCount; ++idx)
             {

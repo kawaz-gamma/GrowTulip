@@ -26,6 +26,8 @@ namespace naichilab
         /// </summary>
         [NonSerialized] public IScore LastScore;
 
+        [SerializeField] private int Score = 100000;
+
         #region singleton
 
         private static RankingLoader instance;
@@ -54,6 +56,8 @@ namespace naichilab
         {
             //Class名重複をチェック
             RankingBoards.CheckDuplicateClassName();
+
+            SendScoreAndShowRanking(Score, 0);
         }
 
 
