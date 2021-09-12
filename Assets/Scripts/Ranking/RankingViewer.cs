@@ -5,6 +5,12 @@ using NCMB.Extensions;
 
 namespace Ranking
 {
+    public enum ScoreType
+    {
+        Int,
+        Float,
+    }
+
     public class RankingViewer : MonoBehaviour
     {
         enum RankingType
@@ -32,14 +38,18 @@ namespace Ranking
         private TMPro.TextMeshProUGUI titleText;
 
         [SerializeField]
-        private List<TMPro.TextMeshProUGUI> userTexts;
+        private List<RankingNode> userTexts;
 
         public bool IsValid { get; set; } = true;
 
         [SerializeField]
         private float reloadIntervalSec = 15.0f;
+        [SerializeField]
+        private float reloadAccelIntervalSec = 1.0f;
+        [SerializeField]
+        private float reloadMaxIntervalSec = 120.0f;
 
-        private TadaLib.Timer reloadTimer;
+        private ReloadTimer reloadTimer;
 
         private string ClassName => rankingBoards.GetRankingInfo((int)type).ClassName;
         private string _objectid = null;
@@ -61,7 +71,7 @@ namespace Ranking
         // Start is called before the first frame update
         void Start()
         {
-            reloadTimer = new TadaLib.Timer(reloadIntervalSec);
+            reloadTimer = new ReloadTimer(reloadIntervalSec, reloadAccelIntervalSec, reloadMaxIntervalSec);
             StartCoroutine(ReloadRanking());
         }
 
@@ -77,6 +87,7 @@ namespace Ranking
                 }
             }
 
+            reloadTimer.Proc();
             if (reloadTimer.IsTimeout())
             {
                 StartCoroutine(ReloadRanking());
@@ -88,7 +99,9 @@ namespace Ranking
         {
             foreach(var text in userTexts)
             {
-                text.text = "";
+                text.NoText.text = "";
+                text.NameText.text = "";
+                text.ScoreText.text = "";
             }
 
             var board = rankingBoards.GetRankingInfo((int)type);
@@ -130,44 +143,46 @@ namespace Ranking
         {
             // ランキングの個数を取得
             var totalCount = 0;
-            {
-                var fetchEnd = false;
-                NCMB.NCMBQuery<NCMB.NCMBObject> query = new NCMB.NCMBQuery<NCMB.NCMBObject>(board.ClassName);
-                query.CountAsync((int count, NCMB.NCMBException e) =>
-                {
-                    if (e != null)
-                    {
-                    }
-                    else
-                    {
-                        totalCount = count;
-                        fetchEnd = true;
-                    }
-                });
-
-                yield return new WaitUntil(() => fetchEnd);
-            }
-
             // 自分の順位を取得
             var myRank = 0;
             {
-                var fetchEnd = false;
                 NCMB.NCMBQuery<NCMB.NCMBObject> query = new NCMB.NCMBQuery<NCMB.NCMBObject>(board.ClassName);
-                query.WhereGreaterThan(COLUMN_SCORE, scoreGetter.Score);
-                query.CountAsync((int count, NCMB.NCMBException e) =>
-                {
-                    if(e != null)
-                    {
-                        Debug.Log("自分の順位を取得失敗");
-                    }
-                    else
-                    {
-                        myRank = count;
-                        fetchEnd = true;
-                    }
-                });
 
-                yield return new WaitUntil(() => fetchEnd);
+                {
+                    var fetchEnd = false;
+                    query.CountAsync((int count, NCMB.NCMBException e) =>
+                    {
+                        if (e != null)
+                        {
+                        }
+                        else
+                        {
+                            totalCount = count;
+                            fetchEnd = true;
+                        }
+                    });
+
+                    yield return new WaitUntil(() => fetchEnd);
+                }
+
+                {
+                    var fetchEnd = false;
+                    query.WhereGreaterThan(COLUMN_SCORE, scoreGetter.Score);
+                    query.CountAsync((int count, NCMB.NCMBException e) =>
+                    {
+                        if (e != null)
+                        {
+                            Debug.Log("自分の順位を取得失敗");
+                        }
+                        else
+                        {
+                            myRank = count;
+                            fetchEnd = true;
+                        }
+                    });
+
+                    yield return new WaitUntil(() => fetchEnd);
+                }
             }
 
             // ランキングボード情報の取得 & 文字列更新
@@ -190,13 +205,38 @@ namespace Ranking
                 }
 
 
-                string text = $"{idx + 1 + skipCount}  {r[COLUMN_NAME].ToString()}  {r[COLUMN_SCORE]}";
-                if (r.ObjectId == ObjectID)
                 {
-                    text = "<color=yellow>" + text + "</color>";
+                    var text = (idx + 1 + skipCount).ToString();
+                    if (r.ObjectId == ObjectID)
+                    {
+                        text = "<color=yellow>" + text + "</color>";
+                    }
+                    userTexts[idx].NoText.text = text;
                 }
 
-                userTexts[idx].text = text;
+                {
+                    var text = (r[COLUMN_NAME]).ToString();
+                    if (r.ObjectId == ObjectID)
+                    {
+                        text = "<color=yellow>" + text + "</color>";
+                    }
+                    userTexts[idx].NameText.text = text;
+                }
+
+                {
+                    var text = (r[COLUMN_SCORE]).ToString();
+                    if (scoreGetter.ScoreType == ScoreType.Float)
+                    {
+                        text = (double.Parse(r[COLUMN_SCORE].ToString()) / 100.0f).ToString("F2");
+                    }
+                    
+                    if (r.ObjectId == ObjectID)
+                    {
+                        text = "<color=yellow>" + text + "</color>";
+                    }
+                    userTexts[idx].ScoreText.text = text;
+                }
+
                 ++idx;
             }
         }
