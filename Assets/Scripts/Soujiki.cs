@@ -20,6 +20,11 @@ public class Soujiki : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 1fëÅÇ≠Ç»ÇÈ
+        if (target == null)
+        {
+            state = SoujikiState.Stop;
+        }
         switch (state)
         {
             case SoujikiState.Stop:
