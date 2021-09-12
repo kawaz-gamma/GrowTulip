@@ -197,7 +197,7 @@ namespace Ranking
 
                 {
                     var fetchEnd = false;
-                    query.WhereGreaterThan(COLUMN_SCORE, highScore);
+                    query.WhereGreaterThan(COLUMN_SCORE, Mathf.Max(highScore, scoreGetter.Score));
                     query.CountAsync((int count, NCMB.NCMBException e) =>
                     {
                         if (e != null)
@@ -217,8 +217,23 @@ namespace Ranking
 
             // ランキングボード情報の取得 & 文字列更新
             var so = new NCMB.Extensions.YieldableNcmbQuery<NCMB.NCMBObject>(board.ClassName);
-            so.Limit = 3;
-            var skipCount = Mathf.Clamp(myRank - so.Limit / 2, 0, totalCount - 1);
+            so.Limit = 5;
+            var skipCount = myRank - 1;
+
+            if(myRank <= 2)
+            {
+                skipCount = 0;
+            }
+            if(myRank >= totalCount - 1)
+            {
+                skipCount = totalCount - 2;
+            }
+            if(skipCount < 0)
+            {
+                skipCount = 0;
+            }
+
+            //var skipCount = Mathf.Clamp(myRank - 1, 0, totalCount - 2);
             so.Skip = skipCount;
             so.OrderByDescending(COLUMN_SCORE);
 
